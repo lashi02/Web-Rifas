@@ -117,9 +117,20 @@ const recentActivity = [
 
       <!-- Main Content -->
       <main class="flex-1 p-6">
-        <div class="mb-8">
-          <h1 class="text-2xl font-bold text-white">Dashboard</h1>
-          <p class="text-neutral-400">Resumen general de la plataforma</p>
+        <div class="mb-8 flex items-center justify-between">
+          <div>
+            <h1 class="text-2xl font-bold text-white">Dashboard</h1>
+            <p class="text-neutral-400">Resumen general de la plataforma</p>
+          </div>
+          <a
+            href="/admin/reservations"
+            class="inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark transition-colors hover:bg-gold-light"
+          >
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            Ver Reservas
+          </a>
         </div>
 
         <!-- Stats Grid -->
