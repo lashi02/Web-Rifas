@@ -1,0 +1,100 @@
+---
+interface Winner {
+  id: string;
+  name: string;
+  prize: string;
+  image: string;
+  date: string;
+  province: string;
+  ticketNumber: number;
+}
+
+const winners: Winner[] = [
+  {
+    id: '1',
+    name: 'María G.',
+    prize: 'iPhone 15 Pro Max',
+    image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400',
+    date: '2026-06-15',
+    province: 'La Habana',
+    ticketNumber: 234,
+  },
+  {
+    id: '2',
+    name: 'Carlos R.',
+    prize: 'Samsung Smart TV 55"',
+    image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400',
+    date: '2026-06-01',
+    province: 'Santiago de Cuba',
+    ticketNumber: 891,
+  },
+  {
+    id: '3',
+    name: 'Ana L.',
+    prize: 'PlayStation 5',
+    image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400',
+    date: '2026-05-20',
+    province: 'Camagüey',
+    ticketNumber: 156,
+  },
+  {
+    id: '4',
+    name: 'Roberto M.',
+    prize: 'MacBook Air M3',
+    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400',
+    date: '2026-05-10',
+    province: 'Santa Clara',
+    ticketNumber: 423,
+  },
+];
+
+const hasWinners = winners.length > 0;
+---
+
+{hasWinners ? (
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {winners.map((winner) => (
+      <article class="card-premium overflow-hidden">
+        <div class="relative aspect-square overflow-hidden">
+          <img
+            src={winner.image}
+            alt={`Premio: ${winner.prize}`}
+            class="h-full w-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent"></div>
+          <div class="absolute bottom-3 left-3 right-3">
+            <span class="inline-block rounded-full border border-gold/30 bg-gold/20 px-2 py-0.5 text-[10px] font-semibold text-gold">
+              Ganador
+            </span>
+          </div>
+        </div>
+
+        <div class="p-4">
+          <h3 class="mb-1 font-bold text-white">{winner.name}</h3>
+          <p class="mb-2 text-sm text-gold">{winner.prize}</p>
+          <div class="flex items-center justify-between text-xs text-neutral-500">
+            <span>Nº {winner.ticketNumber}</span>
+            <span>{winner.province}</span>
+          </div>
+          <p class="mt-1 text-xs text-neutral-600">
+            {new Date(winner.date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
+        </div>
+      </article>
+    ))}
+  </div>
+) : (
+  <div class="py-12 text-center">
+    <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
+      <svg class="h-8 w-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+      </svg>
+    </div>
+    <h3 class="mb-2 text-xl font-bold text-white">Próximamente</h3>
+    <p class="text-neutral-400">Los ganadores se publicarán aquí después de cada sorteo en vivo.</p>
+  </div>
+)}
