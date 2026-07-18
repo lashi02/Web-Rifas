@@ -41,7 +41,7 @@ function generateMockNumbers(total: number): NumberItem[] {
 
 export default function NumberSelector({ totalNumbers, ticketPrice, drawDate, raffleTitle, raffleId }: Props) {
   const [numbers, setNumbers] = useState<NumberItem[]>(() => generateMockNumbers(totalNumbers));
-  const [selected, setSelected] = useState<Set<number>>(new Set());
+  const [selected, setSelected] = useState<number[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [filterStatus, setFilterStatus] = useState<'all' | NumberStatus>('all');
   const [showForm, setShowForm] = useState(false);
@@ -62,30 +62,25 @@ export default function NumberSelector({ totalNumbers, ticketPrice, drawDate, ra
     return numbers.filter(n => n.status === filterStatus);
   }, [numbers, filterStatus]);
 
+  const selectedSet = useMemo(() => new Set(selected), [selected]);
+
   const toggleNumber = useCallback((num: number) => {
     const item = numbers.find(n => n.number === num);
     if (!item || item.status !== 'available') return;
 
     setSelected(prev => {
-      const next = new Set(prev);
-      if (next.has(num)) {
-        next.delete(num);
-      } else {
-        next.add(num);
+      if (prev.includes(num)) {
+        return prev.filter(n => n !== num);
       }
-      return next;
+      return [...prev, num];
     });
   }, [numbers]);
 
   const selectRandom = useCallback((count: number) => {
-    const available = numbers.filter(n => n.status === 'available' && !selected.has(n.number));
+    const available = numbers.filter(n => n.status === 'available' && !selected.includes(n.number));
     const shuffled = [...available].sort(() => Math.random() - 0.5);
     const random = shuffled.slice(0, count).map(n => n.number);
-    setSelected(prev => {
-      const next = new Set(prev);
-      random.forEach(n => next.add(n));
-      return next;
-    });
+    setSelected(prev => [...prev, ...random]);
   }, [numbers, selected]);
 
   const scrollToNumber = useCallback((num: number) => {
@@ -103,30 +98,29 @@ export default function NumberSelector({ totalNumbers, ticketPrice, drawDate, ra
     const num = parseInt(searchValue);
     if (num >= 1 && num <= totalNumbers) {
       scrollToNumber(num);
-      if (numbers.find(n => n.number === num)?.status === 'available') {
-        setSelected(prev => new Set(prev).add(num));
+      if (numbers.find(n => n.number === num)?.status === 'available' && !selected.includes(num)) {
+        setSelected(prev => [...prev, num]);
       }
     }
-  }, [searchValue, totalNumbers, scrollToNumber, numbers]);
+  }, [searchValue, totalNumbers, scrollToNumber, numbers, selected]);
 
   const handleReserve = useCallback(() => {
-    if (selected.size === 0) return;
+    if (selected.length === 0) return;
     setShowForm(true);
   }, [selected]);
 
   const handleFormSubmit = useCallback((formData: { name: string; phone: string; province: string; beneficiary?: string }) => {
     // Simulate reservation
-    const nums = Array.from(selected);
-    setReservedNumbers(nums);
+    setReservedNumbers(selected);
     setNumbers(prev => prev.map(n =>
-      nums.includes(n.number) ? { ...n, status: 'reserved' as NumberStatus, holder: formData.name } : n
+      selected.includes(n.number) ? { ...n, status: 'reserved' as NumberStatus, holder: formData.name } : n
     ));
-    setSelected(new Set());
+    setSelected([]);
     setShowForm(false);
     setShowPayment(true);
   }, [selected]);
 
-  const selectedTotal = selected.size * ticketPrice;
+  const selectedTotal = selected.length * ticketPrice;
 
   if (showPayment) {
     return (
@@ -143,7 +137,7 @@ export default function NumberSelector({ totalNumbers, ticketPrice, drawDate, ra
   if (showForm) {
     return (
       <ReservationForm
-        selectedNumbers={Array.from(selected).sort((a, b) => a - b)}
+        selectedNumbers={[...selected].sort((a, b) => a - b)}
         total={selectedTotal}
         ticketPrice={ticketPrice}
         onSubmit={handleFormSubmit}
@@ -258,7 +252,7 @@ export default function NumberSelector({ totalNumbers, ticketPrice, drawDate, ra
         className="grid max-h-[500px] grid-cols-5 gap-1.5 overflow-y-auto rounded-xl border border-dark-border bg-dark p-3 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12"
       >
         {filteredNumbers.map((item) => {
-          const isSelected = selected.has(item.number);
+          const isSelected = selectedSet.has(item.number);
           const isAvailable = item.status === 'available';
 
           return (
@@ -294,13 +288,13 @@ export default function NumberSelector({ totalNumbers, ticketPrice, drawDate, ra
       </div>
 
       {/* Cart Summary - Sticky on mobile */}
-      {selected.size > 0 && (
+      {selected.length > 0 && (
         <div className="sticky bottom-0 z-10 rounded-xl border border-gold/30 bg-dark-card p-4 shadow-lg shadow-gold/10">
           <div className="mb-3 flex items-center justify-between">
             <div>
               <p className="text-sm text-neutral-400">Seleccionados</p>
               <p className="text-lg font-bold text-white">
-                {selected.size} {selected.size === 1 ? 'número' : 'números'}
+                {selected.length} {selected.length === 1 ? 'número' : 'números'}
               </p>
             </div>
             <div className="text-right">
@@ -310,14 +304,14 @@ export default function NumberSelector({ totalNumbers, ticketPrice, drawDate, ra
           </div>
 
           <div className="mb-3 flex flex-wrap gap-1">
-            {Array.from(selected).sort((a, b) => a - b).slice(0, 20).map((num) => (
+            {[...selected].sort((a, b) => a - b).slice(0, 20).map((num) => (
               <span key={num} className="rounded bg-blue/20 px-2 py-0.5 text-xs font-medium text-blue">
                 {num}
               </span>
             ))}
-            {selected.size > 20 && (
+            {selected.length > 20 && (
               <span className="rounded bg-dark px-2 py-0.5 text-xs text-neutral-500">
-                +{selected.size - 20} más
+                +{selected.length - 20} más
               </span>
             )}
           </div>
