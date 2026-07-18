@@ -1,0 +1,116 @@
+import type { Participant } from '../types';
+
+export const mockParticipants: Participant[] = [
+  {
+    id: '1',
+    raffle_id: '1',
+    name: 'Carlos M.',
+    phone: '+53 5555 1234',
+    province: 'La Habana',
+    ticket_numbers: [45, 46, 47, 123, 456],
+    payment_status: 'confirmed',
+    purchased_at: '2026-07-10T14:30:00',
+  },
+  {
+    id: '2',
+    raffle_id: '1',
+    name: 'María G.',
+    phone: '+1 (305) 555-0123',
+    province: 'Otro (EE.UU.)',
+    beneficiary: 'Pedro García - Santiago de Cuba',
+    ticket_numbers: [77, 234, 567, 891],
+    payment_status: 'confirmed',
+    purchased_at: '2026-07-12T09:15:00',
+  },
+  {
+    id: '3',
+    raffle_id: '1',
+    name: 'Roberto L.',
+    phone: '+53 5555 5678',
+    province: 'Camagüey',
+    ticket_numbers: [12, 88, 333],
+    payment_status: 'confirmed',
+    purchased_at: '2026-07-14T16:45:00',
+  },
+  {
+    id: '4',
+    raffle_id: '1',
+    name: 'Ana P.',
+    phone: '+1 (786) 555-0456',
+    province: 'Otro (EE.UU.)',
+    beneficiary: 'Familia Pérez - Holguín',
+    ticket_numbers: [99, 100, 201, 444, 678, 999],
+    payment_status: 'confirmed',
+    purchased_at: '2026-07-15T11:20:00',
+  },
+  {
+    id: '5',
+    raffle_id: '1',
+    name: 'Pedro S.',
+    phone: '+53 5555 9012',
+    province: 'Santa Clara',
+    ticket_numbers: [155, 288],
+    payment_status: 'pending',
+    purchased_at: '2026-07-16T08:00:00',
+  },
+  {
+    id: '6',
+    raffle_id: '1',
+    name: 'Laura R.',
+    phone: '+53 5555 3456',
+    province: 'Guantánamo',
+    ticket_numbers: [50, 51, 52, 53, 54, 55, 56, 57, 58, 59],
+    payment_status: 'confirmed',
+    purchased_at: '2026-07-16T10:30:00',
+  },
+  {
+    id: '7',
+    raffle_id: '1',
+    name: 'José D.',
+    phone: '+1 (212) 555-0789',
+    province: 'Otro (EE.UU.)',
+    beneficiary: 'María Díaz - Las Tunas',
+    ticket_numbers: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    payment_status: 'confirmed',
+    purchased_at: '2026-07-16T14:00:00',
+  },
+  {
+    id: '8',
+    raffle_id: '1',
+    name: 'Carmen V.',
+    phone: '+53 5555 7890',
+    province: 'Cienfuegos',
+    ticket_numbers: [777],
+    payment_status: 'confirmed',
+    purchased_at: '2026-07-17T09:45:00',
+  },
+  {
+    id: '9',
+    raffle_id: '1',
+    name: 'Francisco T.',
+    phone: '+53 5555 2345',
+    province: 'Matanzas',
+    ticket_numbers: [111, 222, 444, 888],
+    payment_status: 'confirmed',
+    purchased_at: '2026-07-17T13:15:00',
+  },
+  {
+    id: '10',
+    raffle_id: '1',
+    name: 'Isabel N.',
+    phone: '+1 (305) 555-1234',
+    province: 'Otro (EE.UU.)',
+    beneficiary: 'Hermanos Núñez - Pinar del Río',
+    ticket_numbers: [3, 13, 23, 33, 43, 53, 63, 73, 83, 93],
+    payment_status: 'confirmed',
+    purchased_at: '2026-07-17T16:30:00',
+  },
+];
+
+export function getParticipantsByRaffle(raffleId: string): Participant[] {
+  return mockParticipants.filter(p => p.raffle_id === raffleId);
+}
+
+export function getConfirmedParticipants(raffleId: string): Participant[] {
+  return mockParticipants.filter(p => p.raffle_id === raffleId && p.payment_status === 'confirmed');
+}
