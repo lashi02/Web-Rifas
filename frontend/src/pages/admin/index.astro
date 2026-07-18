@@ -2,6 +2,7 @@
 export const prerender = true;
 
 import Layout from '../../layouts/Layout.astro';
+import ReservationActions from '../../components/admin/ReservationActions';
 
 const stats = {
   activeRaffles: 6,
@@ -9,7 +10,6 @@ const stats = {
   soldToday: 47,
   totalParticipants: 342,
   estimatedRevenue: '$17,100',
-  nextDraw: '15 Ago 2026',
 };
 
 const pendingReservations = [
@@ -198,6 +198,7 @@ const recentActivity = [
                     <div>
                       <p class="font-medium text-white">{res.name}</p>
                       <p class="text-xs text-neutral-500">{res.raffle} · {res.time}</p>
+                      <p class="text-xs text-neutral-600">{res.phone}</p>
                     </div>
                   </div>
                   <div class="flex items-center gap-3">
@@ -207,11 +208,17 @@ const recentActivity = [
                         {res.numbers.slice(0, 3).map((n) => (
                           <span class="rounded bg-dark px-1.5 py-0.5 text-[10px] text-neutral-400">{n}</span>
                         ))}
+                        {res.numbers.length > 3 && (
+                          <span class="rounded bg-dark px-1.5 py-0.5 text-[10px] text-neutral-500">+{res.numbers.length - 3}</span>
+                        )}
                       </div>
                     </div>
-                    <button class="rounded-lg bg-green/20 px-3 py-1.5 text-xs font-semibold text-green transition-colors hover:bg-green/30">
-                      Aprobar
-                    </button>
+                    <ReservationActions
+                      reservation={res}
+                      onApprove={(id) => console.log('Aprobar:', id)}
+                      onCancel={(id, reason) => console.log('Cancelar:', id, reason)}
+                      client:load
+                    />
                   </div>
                 </div>
               ))}
