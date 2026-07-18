@@ -4,6 +4,8 @@ dist/
 # generated types
 .astro/
 
+# agente
+
 # dependencies
 node_modules/
 
@@ -17,8 +19,14 @@ pnpm-debug.log*
 .env
 .env.production
 
+# documents
+*.pdf
+
 # macOS-specific files
 .DS_Store
 
 # jetbrains setting folder
 .idea/
+
+# files
+.pdf
