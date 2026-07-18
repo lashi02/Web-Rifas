@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import WhatsAppButton from '../components/WhatsAppButton';
 
 interface Props {
   title: string;
@@ -24,5 +25,6 @@ const { title, description = 'Tu tienda de rifas online' } = Astro.props;
   </head>
   <body class="min-h-screen bg-dark text-neutral-200 antialiased">
     <slot />
+    <WhatsAppButton client:load />
   </body>
 </html>
