@@ -9,6 +9,7 @@ import ImageGallery from '../../components/ImageGallery';
 import RaffleRules from '../../components/RaffleRules.astro';
 import ParticipantList from '../../components/ParticipantList.astro';
 import RaffleUpdates from '../../components/RaffleUpdates.astro';
+import NumberSelector from '../../components/NumberSelector';
 import { supabase } from '../../lib/supabase';
 import type { Raffle } from '../../types';
 
@@ -49,13 +50,6 @@ const mockImages = [
   raffle.image_url,
   'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=800',
   'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800',
-];
-
-const packages = [
-  { count: 1, label: '1 Número', popular: false },
-  { count: 3, label: '3 Números', popular: false },
-  { count: 5, label: '5 Números', popular: true },
-  { count: 10, label: '10 Números', popular: false },
 ];
 
 if (raffle.status !== 'active') {
@@ -144,142 +138,16 @@ if (raffle.status !== 'active') {
           <ParticipantList />
         </div>
 
-        <!-- Columna Derecha: Compra + Info -->
+        <!-- Columna Derecha: Selector de Números -->
         <div class="space-y-6 lg:col-span-1">
-          <!-- Sticky en desktop -->
-          <div class="sticky top-24 space-y-6">
-            <!-- Panel de Compra -->
-            <div class="card-premium p-6">
-              <h2 class="mb-4 text-lg font-bold text-white">Selecciona tus Números</h2>
-
-              <!-- Precio -->
-              <div class="mb-4 flex items-center justify-between rounded-lg bg-dark p-4">
-                <span class="text-neutral-500">Precio por número</span>
-                <span class="text-2xl font-bold text-gold">${raffle.ticket_price.toFixed(2)}</span>
-              </div>
-
-              <!-- Paquetes -->
-              <div class="mb-4">
-                <p class="mb-3 text-sm font-semibold text-neutral-300">Elige una cantidad</p>
-                <div class="grid grid-cols-2 gap-2">
-                  {packages.map((pkg) => (
-                    <button
-                      class={`relative rounded-lg border p-3 text-center transition-all ${
-                        pkg.popular
-                          ? 'border-gold bg-gold/10 text-gold hover:bg-gold/20'
-                          : 'border-dark-border bg-dark text-neutral-300 hover:border-gold hover:text-gold'
-                      }`}
-                    >
-                      {pkg.popular && (
-                        <span class="absolute -top-2 left-1/2 -translate-x-1/2 rounded-full bg-gold px-2 py-0.5 text-[10px] font-bold text-dark">
-                          Popular
-                        </span>
-                      )}
-                      <p class="text-lg font-bold">{pkg.count}</p>
-                      <p class="text-xs text-neutral-400">{pkg.count === 1 ? 'Número' : 'Números'}</p>
-                      <p class="mt-1 text-sm font-semibold text-gold">${(raffle.ticket_price * pkg.count).toFixed(2)}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <!-- Contador Regresivo -->
-              <div class="mb-4">
-                <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-gold">Tiempo restante</p>
-                <CountdownTimer targetDate={raffle.draw_date} compact client:load />
-              </div>
-
-              <!-- Barra de Progreso -->
-              <div class="mb-6">
-                <div class="mb-2 flex items-center justify-between text-sm">
-                  <span class="text-neutral-400">Disponibles</span>
-                  <span class="font-semibold text-green">{availableTickets}</span>
-                </div>
-                <div class="h-2 overflow-hidden rounded-full bg-dark-border">
-                  <div
-                    class="h-full rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light transition-all duration-500"
-                    style={`width: ${soldPercentage}%`}
-                  >
-                  </div>
-                </div>
-                <div class="mt-2 flex justify-between text-xs text-neutral-500">
-                  <span>{raffle.sold_tickets} vendidos</span>
-                  <span>{raffle.total_tickets} total</span>
-                </div>
-              </div>
-
-              <!-- Botón Principal -->
-              <button
-                class="mb-3 w-full rounded-xl bg-gold py-4 text-lg font-bold text-dark transition-colors hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-50"
-                disabled={availableTickets === 0}
-              >
-                {availableTickets === 0 ? 'Agotado' : 'Seleccionar Números'}
-              </button>
-
-              <!-- Botones Secundarios -->
-              <div class="flex gap-3">
-                <a
-                  href="https://wa.me/1234567890?text=Hola,%20quiero%20participar%20en%20la%20rifa"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-green/30 bg-green/10 py-3 font-semibold text-green transition-colors hover:bg-green/20"
-                >
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                  </svg>
-                  WhatsApp
-                </a>
-                <button
-                  class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-dark-border bg-dark py-3 font-semibold text-neutral-300 transition-colors hover:border-gold hover:text-gold"
-                >
-                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                  </svg>
-                  Compartir
-                </button>
-              </div>
-            </div>
-
-            <!-- Resumen Rápido -->
-            <div class="card-premium p-5">
-              <h3 class="mb-3 font-semibold text-white">Resumen</h3>
-              <div class="space-y-2 text-sm">
-                <div class="flex justify-between">
-                  <span class="text-neutral-500">Números vendidos</span>
-                  <span class="text-white">{raffle.sold_tickets} / {raffle.total_tickets}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-neutral-500">Disponibles</span>
-                  <span class="text-green">{availableTickets}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-neutral-500">Reservados (pendientes)</span>
-                  <span class="text-amber">{reservedTickets}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-neutral-500">Pagados/Confirmados</span>
-                  <span class="text-gold">{paidTickets}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-neutral-500">Fecha del sorteo</span>
-                  <span class="text-white">
-                    {new Date(raffle.draw_date).toLocaleDateString('es-ES', {
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric',
-                    })}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Textos de advertencia -->
-            <div class="space-y-2 text-center text-xs text-neutral-500">
-              <p>Los números quedan confirmados solo después de verificar el pago.</p>
-              <p>Si la reserva vence sin pago, los números vuelven a estar disponibles.</p>
-              <p>El sorteo se realizará en vivo y el resultado será publicado en esta página.</p>
-            </div>
-          </div>
+          <NumberSelector
+            totalNumbers={raffle.total_tickets}
+            ticketPrice={raffle.ticket_price}
+            drawDate={raffle.draw_date}
+            raffleTitle={raffle.title}
+            raffleId={raffle.id}
+            client:load
+          />
         </div>
       </div>
     </div>
