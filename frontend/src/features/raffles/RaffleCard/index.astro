@@ -1,0 +1,60 @@
+---
+import type { Raffle } from '../../../types';
+
+interface Props {
+  raffle: Raffle;
+}
+
+const { raffle } = Astro.props;
+const availableTickets = raffle.total_tickets - raffle.sold_tickets;
+const soldPercentage = (raffle.sold_tickets / raffle.total_tickets) * 100;
+---
+
+<article class="card-premium overflow-hidden">
+  <div class="relative aspect-video overflow-hidden">
+    <img
+      src={raffle.image_url}
+      alt={raffle.title}
+      class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+    />
+    <span class={`absolute top-3 right-3 rounded-full border px-3 py-1 text-xs font-semibold ${
+      raffle.status === 'active'
+        ? 'border-green/30 bg-green/20 text-green'
+        : 'border-neutral-600 bg-neutral-800 text-neutral-400'
+    }`}>
+      {raffle.status === 'active' ? 'Activa' : 'Finalizada'}
+    </span>
+  </div>
+
+  <div class="p-5">
+    <h3 class="mb-2 text-lg font-bold text-white">{raffle.title}</h3>
+    <p class="mb-4 line-clamp-2 text-sm text-neutral-400">{raffle.description}</p>
+
+    <div class="mb-4">
+      <div class="mb-1 flex items-center justify-between text-sm">
+        <span class="text-neutral-500">Boletos vendidos</span>
+        <span class="font-medium text-neutral-300">{raffle.sold_tickets} / {raffle.total_tickets}</span>
+      </div>
+      <div class="h-2 overflow-hidden rounded-full bg-dark-border">
+        <div
+          class="h-full rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light transition-all duration-500"
+          style={`width: ${soldPercentage}%`}
+        >
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-xs text-neutral-500">Precio por boleto</p>
+        <p class="text-xl font-bold text-gold">${raffle.ticket_price.toFixed(2)}</p>
+      </div>
+      <a
+        href={`/raffles/${raffle.id}`}
+        class="rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark transition-colors hover:bg-gold-light"
+      >
+        Ver detalles
+      </a>
+    </div>
+  </div>
+</article>
