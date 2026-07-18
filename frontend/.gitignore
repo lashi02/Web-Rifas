@@ -5,6 +5,7 @@ dist/
 .astro/
 
 # agente
+.mimocode
 
 # dependencies
 node_modules/
@@ -25,8 +26,7 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# jetbrains setting folder
+# jetbrains or vscode
 .idea/
+.vscode/
 
-# files
-.pdf
