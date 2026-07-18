@@ -1,0 +1,200 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const aids = [
+  {
+    id: '1',
+    title: 'Apoyo a familia afectada por incendio',
+    description: 'Familia de 5 miembros en Santa Clara perdió su vivienda por un cortocircuito. Se cubrieron gastos de alojamiento temporal y ropa.',
+    image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=600',
+    date: '2026-07-10',
+    amount: '$500',
+    location: 'Santa Clara',
+  },
+  {
+    id: '2',
+    title: 'Medicamentos para niños con enfermedades crónicas',
+    description: 'Compra de medicamentos esenciales para 8 niños con enfermedades crónicas en Camagüey que no tenían acceso.',
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600',
+    date: '2026-06-25',
+    amount: '$800',
+    location: 'Camagüey',
+  },
+  {
+    id: '3',
+    title: 'Reparación de techo para abuelos',
+    description: 'Reparación completa del techo de una pareja de abuelos en Holguín que vivían con filtraciones constantes.',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600',
+    date: '2026-06-10',
+    amount: '$350',
+    location: 'Holguín',
+  },
+  {
+    id: '4',
+    title: 'Útiles escolares para 50 niños',
+    description: 'Entrega de útiles escolares completos para 50 niños de escuela primaria en Santiago de Cuba.',
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600',
+    date: '2026-05-20',
+    amount: '$400',
+    location: 'Santiago de Cuba',
+  },
+  {
+    id: '5',
+    title: 'Alimentos para hogar de ancianos',
+    description: 'Donación de alimentos no perecederos para el hogar de ancianos "Hermanos Cruz" en La Habana.',
+    image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600',
+    date: '2026-05-05',
+    amount: '$600',
+    location: 'La Habana',
+  },
+  {
+    id: '6',
+    title: 'Materiales para escuela rural',
+    description: 'Envío de materiales educativos y deportivos a escuela rural en Pinar del Río con 120 alumnos.',
+    image: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600',
+    date: '2026-04-18',
+    amount: '$450',
+    location: 'Pinar del Río',
+  },
+];
+
+const totalAids = aids.length;
+const totalAmount = aids.reduce((sum, aid) => sum + parseInt(aid.amount.replace('$', '').replace(',', '')), 0);
+---
+
+<Layout title="Nuestra Parte Social">
+  <Header />
+
+  <main class="bg-dark py-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mb-12 text-center">
+        <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
+          <svg class="h-10 w-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </div>
+        <h1 class="mb-4 text-4xl font-extrabold text-white">Nuestra Parte Social</h1>
+        <p class="mb-8 max-w-2xl mx-auto text-lg text-neutral-400">
+          Una parte de cada rifa se destina a ayudar a familias necesitadas. Todas las ayudas son documentadas y publicadas con total transparencia.
+        </p>
+
+        <!-- Stats -->
+        <div class="mx-auto grid max-w-lg grid-cols-2 gap-4 sm:grid-cols-3">
+          <div class="rounded-xl border border-dark-border bg-dark-card p-4">
+            <p class="text-3xl font-bold text-gold">{totalAids}</p>
+            <p class="text-sm text-neutral-500">Ayudas realizadas</p>
+          </div>
+          <div class="rounded-xl border border-dark-border bg-dark-card p-4">
+            <p class="text-3xl font-bold text-gold">${totalAmount.toLocaleString()}</p>
+            <p class="text-sm text-neutral-500">Donados</p>
+          </div>
+          <div class="col-span-2 sm:col-span-1 rounded-xl border border-dark-border bg-dark-card p-4">
+            <p class="text-3xl font-bold text-gold">100%</p>
+            <p class="text-sm text-neutral-500">Transparente</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commitment -->
+      <div class="mb-12 card-premium p-6 sm:p-8">
+        <div class="grid gap-6 sm:grid-cols-2 items-center">
+          <div>
+            <h2 class="mb-3 text-2xl font-bold text-white">Nuestro Compromiso</h2>
+            <p class="mb-4 text-neutral-400">
+              Creemos en la solidaridad. Por cada rifa que se realiza, un porcentaje de las ganancias se destina directamente a ayudar a familias cubanas que lo necesitan.
+            </p>
+            <ul class="space-y-2 text-neutral-400">
+              <li class="flex items-center gap-2">
+                <svg class="h-5 w-5 flex-shrink-0 text-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Cada ayuda es documentada con fotos y descripción
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="h-5 w-5 flex-shrink-0 text-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Respetamos la privacidad de los beneficiarios
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="h-5 w-5 flex-shrink-0 text-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Publicamos informes mensuales de actividad
+              </li>
+            </ul>
+          </div>
+          <div class="relative overflow-hidden rounded-xl">
+            <img
+              src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600"
+              alt="Ayuda social"
+              class="w-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Aids Grid -->
+      <h2 class="mb-8 text-2xl font-bold text-white">Ayudas Recientes</h2>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {aids.map((aid) => (
+          <article class="card-premium overflow-hidden">
+            <div class="relative aspect-video overflow-hidden">
+              <img
+                src={aid.image}
+                alt={aid.title}
+                class="h-full w-full object-cover"
+              />
+              <div class="absolute top-3 right-3">
+                <span class="rounded-full border border-green/30 bg-green/20 px-3 py-1 text-xs font-semibold text-green">
+                  {aid.amount}
+                </span>
+              </div>
+            </div>
+
+            <div class="p-5">
+              <div class="mb-3 flex items-center gap-2 text-xs text-neutral-500">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                {aid.location}
+                <span class="mx-1">·</span>
+                {new Date(aid.date).toLocaleDateString('es-ES', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })}
+              </div>
+
+              <h3 class="mb-2 font-bold text-white">{aid.title}</h3>
+              <p class="text-sm text-neutral-400">{aid.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-16 text-center">
+        <h2 class="mb-4 text-2xl font-bold text-white">¿Quieres contribuir?</h2>
+        <p class="mb-6 text-neutral-400">Participando en nuestras rifas, automáticamente estás ayudando a quien más lo necesita.</p>
+        <a
+          href="/raffles"
+          class="inline-flex items-center gap-2 rounded-lg bg-gold px-8 py-3 text-lg font-bold text-dark transition-colors hover:bg-gold-light"
+        >
+          Participar en una Rifa
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

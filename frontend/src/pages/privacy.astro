@@ -1,0 +1,98 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Política de Privacidad">
+  <Header />
+
+  <main class="bg-dark py-12">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h1 class="mb-8 text-4xl font-extrabold text-white">Política de Privacidad</h1>
+      <p class="mb-8 text-sm text-neutral-500">Última actualización: Julio 2026</p>
+
+      <div class="space-y-8 text-neutral-400">
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">1. Información que Recopilamos</h2>
+          <p class="mb-4">Para participar en nuestras rifas, recopilamos la siguiente información:</p>
+          <ul class="list-disc space-y-2 pl-6">
+            <li><strong class="text-white">Nombre completo:</strong> Para identificar al participante.</li>
+            <li><strong class="text-white">Número de WhatsApp/Teléfono:</strong> Para contactar al participante y enviar confirmaciones.</li>
+            <li><strong class="text-white">Provincia/País:</strong> Para la entrega de premios.</li>
+            <li><strong class="text-white">Nombre del beneficiario:</strong> Solo cuando un familiar en EE.UU. paga para alguien en Cuba.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">2. Uso de la Información</h2>
+          <p class="mb-4">Utilizamos la información recopilada para:</p>
+          <ul class="list-disc space-y-2 pl-6">
+            <li>Gestionar las reservas y confirmaciones de participación.</li>
+            <li>Comunicar resultados de sorteos y entregas de premios.</li>
+            <li>Enviar actualizaciones sobre rifas activas.</li>
+            <li>Verificar pagos y resolver incidencias.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">3. Protección de Datos</h2>
+          <ul class="list-disc space-y-2 pl-6">
+            <li>No vendemos ni compartimos datos personales con terceros.</li>
+            <li>La información se almacena de forma segura.</li>
+            <li>Solo el equipo autorizado de WebRifas tiene acceso a los datos.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">4. Lista Pública de Participantes</h2>
+          <p>
+            Para mantener la transparencia, publicamos una lista parcial de participantes confirmados en cada rifa. Esta lista solo incluye: nombre parcial (inicial + apellido), últimos 4 dígitos del teléfono, y números adquiridos. No se expone información completa.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">5. Cookies y Analítica</h2>
+          <p>
+            Utilizamos herramientas de analítica (como Google Analytics) para mejorar la experiencia del usuario. Estas herramientas recopilan información anónima sobre el uso de la web.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">6. Derechos del Usuario</h2>
+          <p class="mb-4">Los participantes tienen derecho a:</p>
+          <ul class="list-disc space-y-2 pl-6">
+            <li>Solicitar acceso a sus datos personales.</li>
+            <li>Solicitar la corrección de datos incorrectos.</li>
+            <li>Solicitar la eliminación de sus datos (sujeto a obligaciones legales).</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">7. Menores de Edad</h2>
+          <p>
+            Nuestro servicio no está dirigido a menores de 18 años. No recopilamos intencionadamente información de menores de edad.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">8. Cambios en esta Política</h2>
+          <p>
+            Nos reservamos el derecho de actualizar esta política de privacidad en cualquier momento. Los cambios serán publicados en esta página.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">9. Contacto</h2>
+          <p>
+            Para preguntas sobre esta política de privacidad, contáctanos por WhatsApp al número indicado en la página.
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

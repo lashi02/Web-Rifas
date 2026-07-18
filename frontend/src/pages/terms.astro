@@ -1,0 +1,110 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Términos y Condiciones">
+  <Header />
+
+  <main class="bg-dark py-12">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h1 class="mb-8 text-4xl font-extrabold text-white">Términos y Condiciones</h1>
+      <p class="mb-8 text-sm text-neutral-500">Última actualización: Julio 2026</p>
+
+      <div class="space-y-8 text-neutral-400">
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">1. Naturaleza del Servicio</h2>
+          <p class="mb-4">
+            WebRifas es una plataforma de promoción y sorteos que opera como un servicio de entretenimiento. No constituye un juego de azar, apuesta ni actividad de casino.
+          </p>
+          <p>
+            Los sorteos se realizan como dinámicas promocionales donde los participantes adquieren números para tener la oportunidad de ganar premios.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">2. Elegibilidad</h2>
+          <ul class="list-disc space-y-2 pl-6">
+            <li>Los participantes deben ser mayores de 18 años.</li>
+            <li>Los números solo pueden ser adquiridos una vez por persona por sorteo.</li>
+            <li>Los familiares en EE.UU. pueden participar para beneficiarios en Cuba.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">3. Proceso de Participación</h2>
+          <ol class="list-decimal space-y-2 pl-6">
+            <li>El participante selecciona los números que desea adquirir.</li>
+            <li>Los números quedan temporalmente reservados por un máximo de 30 minutos.</li>
+            <li>El pago debe realizarse durante ese período por los medios acordados.</li>
+            <li>Una vez verificado el pago, los números quedan confirmados oficialmente.</li>
+            <li>Si el pago no se confirma en el tiempo establecido, los números vuelven a estar disponibles.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">4. Pagos</h2>
+          <ul class="list-disc space-y-2 pl-6">
+            <li>Los pagos se realizan por medios externos: Zelle, transferencia bancaria u otros acordados.</li>
+            <li>WebRifas no procesa pagos directamente a través de la plataforma.</li>
+            <li>Es responsabilidad del participante verificar los datos antes de realizar el pago.</li>
+            <li>Los pagos realizados por error no son reembolsables.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">5. Sorteos</h2>
+          <ul class="list-disc space-y-2 pl-6">
+            <li>Los sorteos se realizan en vivo por redes sociales (Instagram, Facebook, YouTube).</li>
+            <li>Se utiliza un sistema aleatorio certificado para seleccionar al ganador.</li>
+            <li>El resultado es definitivo e inapelable.</li>
+            <li>El ganador es contactado directamente por WhatsApp.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">6. Premios</h2>
+          <ul class="list-disc space-y-2 pl-6">
+            <li>Los premios son los descritos en cada rifa específica.</li>
+            <li>Los premios no son canjeables por efectivo.</li>
+            <li>La entrega se realiza personalmente o por acuerdo con el ganador.</li>
+            <li>Los gastos de envío, si aplica, corren por cuenta del ganador.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">7. Transparencia</h2>
+          <p>
+            WebRifas se compromete a mantener total transparencia en todos sus procesos. La lista de participantes confirmados se publica en cada rifa, y los sorteos se transmiten en vivo.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">8. Limitación de Responsabilidad</h2>
+          <p>
+            WebRifas no se hace responsable por errores en los datos proporcionados por los participantes, pagos realizados por error, o problemas de conexión que impidan participar en el sorteo en vivo.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">9. Modificaciones</h2>
+          <p>
+            WebRifas se reserva el derecho de modificar estos términos en cualquier momento. Los participantes serán notificados de cambios significativos a través de la plataforma.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="mb-4 text-xl font-bold text-white">10. Contacto</h2>
+          <p>
+            Para preguntas sobre estos términos, contáctanos por WhatsApp al número indicado en la página.
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

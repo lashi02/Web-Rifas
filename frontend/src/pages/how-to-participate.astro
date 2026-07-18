@@ -1,0 +1,254 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const stepsForCuba = [
+  {
+    number: 1,
+    title: 'Elige tu rifa',
+    description: 'Explora las rifas activas y elige la que más te guste. Puedes ver el premio, el precio por número y cuántos quedan disponibles.',
+    icon: 'search',
+  },
+  {
+    number: 2,
+    title: 'Selecciona tus números',
+    description: 'Haz clic en "Seleccionar Números" y elige los que quieras. Puedes buscar un número específico o seleccionar varios.',
+    icon: 'numbers',
+  },
+  {
+    number: 3,
+    title: 'Confirma tus datos',
+    description: 'Escribe tu nombre completo, número de WhatsApp y provincia. Solo necesitamos estos datos para contactarte.',
+    icon: 'form',
+  },
+  {
+    number: 4,
+    title: 'Reserva los números',
+    description: 'Al confirmar, tus números quedan reservados por 30 minutos. Tienes ese tiempo para realizar el pago.',
+    icon: 'clock',
+  },
+  {
+    number: 5,
+    title: 'Realiza el pago',
+    description: 'Paga por Zelle, transferencia bancaria u otro medio acordado. Guarda el comprobante de pago.',
+    icon: 'payment',
+  },
+  {
+    number: 6,
+    title: 'Envía el comprobante',
+    description: 'Envía el comprobante por WhatsApp al número que te indicamos. Incluye tu nombre y los números que reservaste.',
+    icon: 'whatsapp',
+  },
+  {
+    number: 7,
+    title: 'Espera la confirmación',
+    description: 'El administrador verificará tu pago y te confirmará por WhatsApp. Tus números cambiarán a "pagados" en la web.',
+    icon: 'check',
+  },
+  {
+    number: 8,
+    title: '¡Participa en el sorteo!',
+    description: 'El día del sorteo, míralo en vivo por nuestras redes sociales. Si ganas, te contactaremos para la entrega del premio.',
+    icon: 'trophy',
+  },
+];
+
+const stepsForUS = [
+  {
+    number: 1,
+    title: 'Elige la rifa para tu familiar',
+    description: 'Selecciona la rifa que quieres regalar o en la que quieres que participe tu familiar en Cuba.',
+    icon: 'search',
+  },
+  {
+    number: 2,
+    title: 'Selecciona los números',
+    description: 'Elige los números que quieras para tu familiar. Puedes buscar números específicos o usar la opción aleatoria.',
+    icon: 'numbers',
+  },
+  {
+    number: 3,
+    title: 'Confirma con datos del beneficiario',
+    description: 'Escribe tu nombre y en "Nombre del beneficiario" pon el nombre de tu familiar en Cuba que recibirá el premio.',
+    icon: 'form',
+  },
+  {
+    number: 4,
+    title: 'Paga por Zelle',
+    description: 'Realiza el pago por Zelle al email que te indicamos. En el concepto escribe los números que reservaste.',
+    icon: 'zelle',
+  },
+  {
+    number: 5,
+    title: 'Envía comprobante por WhatsApp',
+    description: 'Envía el comprobante de Zelle por WhatsApp. Indica que pagas para tu familiar y su nombre completo.',
+    icon: 'whatsapp',
+  },
+  {
+    number: 6,
+    title: '¡Tu familiar participa!',
+    description: 'Una vez verificado el pago, tu familiar en Cuba queda participando oficialmente. Nosotros lo contactamos si gana.',
+    icon: 'trophy',
+  },
+];
+
+const faqs = [
+  {
+    question: '¿Cuánto tiempo tengo para pagar después de reservar?',
+    answer: 'Tienes 30 minutos para realizar el pago después de reservar los números. Si el pago no se confirma en ese tiempo, los números vuelven a estar disponibles para otros participantes.',
+  },
+  {
+    question: '¿Qué pasa si envío el pago por error a otro número?',
+    answer: 'Contacta inmediatamente por WhatsApp con el comprobante correcto. Si el pago fue enviado por error, no podemos garantizar la reserva. Por eso es importante revisar los datos antes de enviar.',
+  },
+  {
+    question: '¿Puedo pagar en pesos cubanos?',
+    answer: 'El precio se establece en USD. Si necesitas pagar en pesos, acuerda el tipo de cambio con el administrador por WhatsApp antes de reservar.',
+  },
+  {
+    question: '¿Cómo sé si gané el sorteo?',
+    answer: 'El sorteo se realiza en vivo por Instagram/Facebook/YouTube. Después del sorteo, publicamos el ganador en nuestra página y lo contactamos directamente por WhatsApp.',
+  },
+  {
+    question: '¿Qué pasa si gano y no estoy en Cuba?',
+    answer: 'Si ganas y no puedes recibir el premio personalmente, acordamos la entrega. Puedes designar a alguien de confianza en Cuba para que reciba el premio.',
+  },
+  {
+    question: '¿El sorteo es realmente justo?',
+    answer: 'Sí. Usamos un sistema aleatorio certificado y el sorteo se transmite en vivo para que todos puedan verlo. Además, publicamos la lista completa de participantes y el número ganador.',
+  },
+];
+---
+
+<Layout title="Cómo Participar">
+  <Header />
+
+  <main class="bg-dark py-12">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mb-12 text-center">
+        <h1 class="mb-4 text-4xl font-extrabold text-white">Cómo Participar</h1>
+        <p class="text-lg text-neutral-400">
+          Sigue estos simples pasos para participar en nuestras rifas y tener la oportunidad de ganar increíbles premios.
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="mb-12 flex justify-center gap-4">
+        <button
+          id="tab-cuba"
+          class="tab-btn rounded-lg bg-gold px-6 py-3 font-semibold text-dark transition-colors"
+        >
+          🇨🇺 En Cuba
+        </button>
+        <button
+          id="tab-us"
+          class="tab-btn rounded-lg border border-dark-border bg-dark px-6 py-3 font-semibold text-neutral-300 transition-colors hover:border-gold hover:text-gold"
+        >
+          🇺🇸 Desde EE.UU.
+        </button>
+      </div>
+
+      <!-- Steps for Cuba -->
+      <div id="steps-cuba" class="space-y-6">
+        {stepsForCuba.map((step) => (
+          <div class="card-premium flex items-start gap-6 p-6">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gold text-xl font-bold text-dark">
+              {step.number}
+            </div>
+            <div>
+              <h3 class="mb-2 text-lg font-bold text-white">{step.title}</h3>
+              <p class="text-neutral-400">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Steps for US -->
+      <div id="steps-us" class="hidden space-y-6">
+        {stepsForUS.map((step) => (
+          <div class="card-premium flex items-start gap-6 p-6">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gold text-xl font-bold text-dark">
+              {step.number}
+            </div>
+            <div>
+              <h3 class="mb-2 text-lg font-bold text-white">{step.title}</h3>
+              <p class="text-neutral-400">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- FAQ -->
+      <div class="mt-16">
+        <h2 class="mb-8 text-center text-3xl font-bold text-white">Preguntas Frecuentes</h2>
+        <div class="space-y-4">
+          {faqs.map((faq) => (
+            <details class="card-premium group">
+              <summary class="flex cursor-pointer items-center justify-between gap-4 p-5 transition-colors hover:bg-dark-hover">
+                <span class="font-semibold text-white">{faq.question}</span>
+                <svg class="h-5 w-5 flex-shrink-0 text-neutral-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-5 pb-5 pl-16 text-neutral-400">
+                {faq.answer}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-16 text-center">
+        <h2 class="mb-4 text-2xl font-bold text-white">¿Listo para participar?</h2>
+        <p class="mb-6 text-neutral-400">Elige tu rifa favorita y sigue los pasos que acabas de ver.</p>
+        <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href="/raffles"
+            class="inline-flex items-center gap-2 rounded-lg bg-gold px-8 py-3 text-lg font-bold text-dark transition-colors hover:bg-gold-light"
+          >
+            Ver Rifas Disponibles
+          </a>
+          <a
+            href="https://wa.me/1234567890"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg border border-green/30 bg-green/10 px-8 py-3 text-lg font-semibold text-green transition-colors hover:bg-green/20"
+          >
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+
+  <script>
+    const tabCuba = document.getElementById('tab-cuba');
+    const tabUS = document.getElementById('tab-us');
+    const stepsCuba = document.getElementById('steps-cuba');
+    const stepsUS = document.getElementById('steps-us');
+
+    tabCuba?.addEventListener('click', () => {
+      tabCuba.className = 'tab-btn rounded-lg bg-gold px-6 py-3 font-semibold text-dark transition-colors';
+      tabUS.className = 'tab-btn rounded-lg border border-dark-border bg-dark px-6 py-3 font-semibold text-neutral-300 transition-colors hover:border-gold hover:text-gold';
+      stepsCuba?.classList.remove('hidden');
+      stepsUS?.classList.add('hidden');
+    });
+
+    tabUS?.addEventListener('click', () => {
+      tabUS.className = 'tab-btn rounded-lg bg-gold px-6 py-3 font-semibold text-dark transition-colors';
+      tabCuba.className = 'tab-btn rounded-lg border border-dark-border bg-dark px-6 py-3 font-semibold text-neutral-300 transition-colors hover:border-gold hover:text-gold';
+      stepsUS?.classList.remove('hidden');
+      stepsCuba?.classList.add('hidden');
+    });
+  </script>
+</Layout>
