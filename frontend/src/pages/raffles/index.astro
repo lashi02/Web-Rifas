@@ -18,12 +18,12 @@ const { data: raffles } = supabase
 const mockRaffles: Raffle[] = [
   {
     id: '1',
-    title: 'iPhone 15 Pro Max',
-    description: 'Gana el nuevo iPhone 15 Pro Max de 256GB en color titanio negro.',
-    image_url: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800',
+    title: 'Combo Antiapagones: EcoFlow Delta 2 + TV + Panel Solar',
+    description: 'Solución completa para apagones: estación de energía portátil, smart TV y panel solar para recarga independiente.',
+    image_url: 'https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?w=800',
     ticket_price: 50,
-    total_tickets: 100,
-    sold_tickets: 67,
+    total_tickets: 1000,
+    sold_tickets: 742,
     status: 'active',
     draw_date: '2026-08-15',
     created_at: '2026-07-01',
@@ -34,20 +34,20 @@ const mockRaffles: Raffle[] = [
     description: 'Consola PS5 con disco de 1TB junto con 3 juegos exclusivos.',
     image_url: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=800',
     ticket_price: 30,
-    total_tickets: 200,
-    sold_tickets: 142,
+    total_tickets: 500,
+    sold_tickets: 312,
     status: 'active',
     draw_date: '2026-08-20',
     created_at: '2026-07-05',
   },
   {
     id: '3',
-    title: 'Viaje a Cancún 5 Noches',
-    description: 'Paquete todo incluido para 2 personas: vuelo, hotel y tours.',
+    title: 'Viaje a Cancún 5 Noches Todo Incluido',
+    description: 'Paquete completo para 2 personas: vuelo, hotel 5 estrellas, tours y traslados.',
     image_url: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800',
     ticket_price: 100,
-    total_tickets: 150,
-    sold_tickets: 89,
+    total_tickets: 300,
+    sold_tickets: 189,
     status: 'active',
     draw_date: '2026-09-01',
     created_at: '2026-07-10',
@@ -58,8 +58,8 @@ const mockRaffles: Raffle[] = [
     description: 'Laptop Apple MacBook Air con chip M3, 16GB RAM y 512GB SSD.',
     image_url: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800',
     ticket_price: 75,
-    total_tickets: 120,
-    sold_tickets: 45,
+    total_tickets: 200,
+    sold_tickets: 89,
     status: 'active',
     draw_date: '2026-09-10',
     created_at: '2026-07-12',
@@ -70,20 +70,20 @@ const mockRaffles: Raffle[] = [
     description: 'El último flagship de Samsung con S Pen y cámara de 200MP.',
     image_url: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800',
     ticket_price: 40,
-    total_tickets: 180,
-    sold_tickets: 130,
+    total_tickets: 400,
+    sold_tickets: 287,
     status: 'active',
     draw_date: '2026-08-25',
     created_at: '2026-07-08',
   },
   {
     id: '6',
-    title: 'Smart TV 65" OLED',
-    description: 'Televisor OLED 4K de 65 pulgadas con sonido Dolby Atmos.',
+    title: 'Smart TV 65" OLED 4K',
+    description: 'Televisor OLED de 65 pulgadas con resolución 4K y sonido Dolby Atmos.',
     image_url: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=800',
     ticket_price: 60,
-    total_tickets: 100,
-    sold_tickets: 55,
+    total_tickets: 250,
+    sold_tickets: 134,
     status: 'active',
     draw_date: '2026-09-05',
     created_at: '2026-07-15',
@@ -96,24 +96,26 @@ const rafflesToShow = raffles?.length ? raffles : mockRaffles;
 <Layout title="Todas las Rifas">
   <Header />
 
-  <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-    <div class="mb-10 text-center">
-      <h1 class="mb-3 text-4xl font-extrabold text-gray-900">Todas las Rifas</h1>
-      <p class="text-lg text-gray-600">Explora todas las rifas disponibles y participa por tu premio favorito.</p>
-    </div>
+  <main class="bg-dark py-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-10 text-center">
+        <h1 class="mb-3 text-4xl font-extrabold text-white">Todas las Rifas</h1>
+        <p class="text-lg text-neutral-400">Explora todas las rifas disponibles y participa por tu premio favorito.</p>
+      </div>
 
-    {rafflesToShow.length > 0 ? (
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {rafflesToShow.map((raffle) => (
-          <RaffleCard raffle={raffle} />
-        ))}
-      </div>
-    ) : (
-      <div class="py-20 text-center">
-        <p class="text-xl text-gray-500">No hay rifas disponibles en este momento.</p>
-        <p class="mt-2 text-gray-400">Vuelve pronto para ver nuevas oportunidades.</p>
-      </div>
-    )}
+      {rafflesToShow.length > 0 ? (
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {rafflesToShow.map((raffle) => (
+            <RaffleCard raffle={raffle} />
+          ))}
+        </div>
+      ) : (
+        <div class="py-20 text-center">
+          <p class="text-xl text-neutral-500">No hay rifas disponibles en este momento.</p>
+          <p class="mt-2 text-neutral-600">Vuelve pronto para ver nuevas oportunidades.</p>
+        </div>
+      )}
+    </div>
   </main>
 
   <Footer />

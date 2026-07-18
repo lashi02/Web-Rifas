@@ -19,12 +19,12 @@ const { data: raffles } = supabase
 const mockRaffles: Raffle[] = [
   {
     id: '1',
-    title: 'iPhone 15 Pro Max',
-    description: 'Gana el nuevo iPhone 15 Pro Max de 256GB en color titanio negro.',
-    image_url: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800',
+    title: 'Combo Antiapagones: EcoFlow Delta 2 + TV + Panel Solar',
+    description: 'Solución completa para apagones: estación de energía portátil, smart TV y panel solar para recarga independiente.',
+    image_url: 'https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?w=800',
     ticket_price: 50,
-    total_tickets: 100,
-    sold_tickets: 67,
+    total_tickets: 1000,
+    sold_tickets: 742,
     status: 'active',
     draw_date: '2026-08-15',
     created_at: '2026-07-01',
@@ -35,20 +35,20 @@ const mockRaffles: Raffle[] = [
     description: 'Consola PS5 con disco de 1TB junto con 3 juegos exclusivos.',
     image_url: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=800',
     ticket_price: 30,
-    total_tickets: 200,
-    sold_tickets: 142,
+    total_tickets: 500,
+    sold_tickets: 312,
     status: 'active',
     draw_date: '2026-08-20',
     created_at: '2026-07-05',
   },
   {
     id: '3',
-    title: 'Viaje a Cancún 5 Noches',
-    description: 'Paquete todo incluido para 2 personas: vuelo, hotel y tours.',
+    title: 'Viaje a Cancún 5 Noches Todo Incluido',
+    description: 'Paquete completo para 2 personas: vuelo, hotel 5 estrellas, tours y traslados.',
     image_url: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800',
     ticket_price: 100,
-    total_tickets: 150,
-    sold_tickets: 89,
+    total_tickets: 300,
+    sold_tickets: 189,
     status: 'active',
     draw_date: '2026-09-01',
     created_at: '2026-07-10',
@@ -56,66 +56,321 @@ const mockRaffles: Raffle[] = [
 ];
 
 const rafflesToShow = raffles?.length ? raffles : mockRaffles;
+const featuredRaffle = rafflesToShow[0];
+const featuredAvailable = featuredRaffle ? featuredRaffle.total_tickets - featuredRaffle.sold_tickets : 0;
+const featuredPercentage = featuredRaffle ? (featuredRaffle.sold_tickets / featuredRaffle.total_tickets) * 100 : 0;
 ---
 
-<Layout title="Inicio">
+<Layout title="Inicio - Rifas Premium">
   <Header />
 
   <main>
-    <section class="bg-gradient-to-br from-primary to-purple-900 py-20 text-center text-white">
-      <div class="mx-auto max-w-4xl px-4">
-        <h1 class="mb-4 text-5xl font-extrabold tracking-tight">
-          Participa y <span class="text-accent">Gana</span> Increíbles Premios
+    <!-- Hero Principal -->
+    <section class="relative overflow-hidden bg-dark py-16 sm:py-24">
+      <div class="absolute inset-0 bg-gradient-to-br from-dark via-dark-card to-dark opacity-80"></div>
+      <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?w=1200')] bg-cover bg-center opacity-20"></div>
+
+      <div class="relative mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          Participa y <span class="text-gradient-gold">Gana</span><br />
+          Increíbles Premios
         </h1>
-        <p class="mb-8 text-lg text-purple-200">
-          Rifas 100% transparentes y seguras. Elige tu rifa favorita, compra tus boletos y espera el sorteo.
+        <p class="mb-8 text-lg text-neutral-400 sm:text-xl">
+          Rifas 100% transparentes y seguras.<br class="hidden sm:block" />
+          Elige tu rifa, selecciona tus números y espera el sorteo en vivo.
         </p>
-        <a
-          href="/raffles"
-          class="inline-block rounded-lg bg-accent px-8 py-3 text-lg font-bold text-white transition-colors hover:bg-accent-dark"
-        >
-          Ver Rifas Disponibles
-        </a>
+
+        <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href="/raffles"
+            class="inline-flex items-center gap-2 rounded-lg bg-gold px-8 py-3 text-lg font-bold text-dark transition-colors hover:bg-gold-light"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/>
+            </svg>
+            Participar Ahora
+          </a>
+          <a
+            href="https://wa.me/1234567890"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg border border-green/30 bg-green/10 px-8 py-3 text-lg font-semibold text-green transition-colors hover:bg-green/20"
+          >
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            WhatsApp
+          </a>
+        </div>
       </div>
     </section>
 
-    <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <h2 class="mb-8 text-center text-3xl font-bold text-gray-900">Rifas Destacadas</h2>
+    <!-- Rifa Destacada con Contador -->
+    {featuredRaffle && (
+      <section class="bg-dark-card py-12">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div class="card-premium overflow-hidden">
+            <div class="grid gap-6 md:grid-cols-2">
+              <div class="relative overflow-hidden">
+                <img
+                  src={featuredRaffle.image_url}
+                  alt={featuredRaffle.title}
+                  class="h-full w-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent"></div>
+                <span class="absolute top-4 left-4 rounded-full border border-gold/30 bg-gold/20 px-3 py-1 text-xs font-semibold text-gold">
+                  Rifa Destacada
+                </span>
+              </div>
 
-      {rafflesToShow.length > 0 ? (
-        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {rafflesToShow.map((raffle) => (
-            <RaffleCard raffle={raffle} />
-          ))}
+              <div class="flex flex-col justify-center p-6">
+                <h2 class="mb-2 text-2xl font-bold text-white sm:text-3xl">{featuredRaffle.title}</h2>
+                <p class="mb-6 text-neutral-400">{featuredRaffle.description}</p>
+
+                <!-- Contador Regresivo -->
+                <div class="mb-6">
+                  <p class="mb-3 text-sm font-semibold uppercase tracking-wider text-gold">Tiempo restante</p>
+                  <div class="flex gap-3">
+                    <div class="flex flex-col items-center rounded-lg bg-dark p-3">
+                      <span class="text-2xl font-bold text-white" id="days">00</span>
+                      <span class="text-xs text-neutral-500">Días</span>
+                    </div>
+                    <div class="flex flex-col items-center rounded-lg bg-dark p-3">
+                      <span class="text-2xl font-bold text-white" id="hours">00</span>
+                      <span class="text-xs text-neutral-500">Horas</span>
+                    </div>
+                    <div class="flex flex-col items-center rounded-lg bg-dark p-3">
+                      <span class="text-2xl font-bold text-white" id="minutes">00</span>
+                      <span class="text-xs text-neutral-500">Min</span>
+                    </div>
+                    <div class="flex flex-col items-center rounded-lg bg-dark p-3">
+                      <span class="text-2xl font-bold text-gold" id="seconds">00</span>
+                      <span class="text-xs text-neutral-500">Seg</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Barra de Progreso -->
+                <div class="mb-6">
+                  <div class="mb-2 flex items-center justify-between text-sm">
+                    <span class="text-neutral-400">{featuredRaffle.sold_tickets} / {featuredRaffle.total_tickets} vendidos</span>
+                    <span class="font-semibold text-gold">{featuredPercentage.toFixed(0)}%</span>
+                  </div>
+                  <div class="h-3 overflow-hidden rounded-full bg-dark-border">
+                    <div
+                      class="h-full rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light transition-all duration-500"
+                      style={`width: ${featuredPercentage}%`}
+                    >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm text-neutral-500">Precio por número</p>
+                    <p class="text-3xl font-bold text-gold">${featuredRaffle.ticket_price.toFixed(2)}</p>
+                  </div>
+                  <a
+                    href={`/raffles/${featuredRaffle.id}`}
+                    class="rounded-lg bg-gold px-6 py-3 font-bold text-dark transition-colors hover:bg-gold-light"
+                  >
+                    Participar
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      ) : (
-        <p class="text-center text-gray-500">No hay rifas disponibles en este momento.</p>
-      )}
+      </section>
+    )}
+
+    <!-- Rifas Activas -->
+    <section class="bg-dark py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 class="mb-8 text-center text-3xl font-bold text-white">Rifas Activas</h2>
+
+        {rafflesToShow.length > 0 ? (
+          <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {rafflesToShow.map((raffle) => (
+              <RaffleCard raffle={raffle} />
+            ))}
+          </div>
+        ) : (
+          <p class="text-center text-neutral-500">No hay rifas disponibles en este momento.</p>
+        )}
+      </div>
     </section>
 
-    <section class="bg-gray-100 py-16">
+    <!-- Cómo Funciona -->
+    <section class="bg-dark-card py-16">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <h2 class="mb-12 text-center text-3xl font-bold text-gray-900">¿Cómo Funciona?</h2>
+        <h2 class="mb-12 text-center text-3xl font-bold text-white">¿Cómo Funciona?</h2>
         <div class="grid gap-8 sm:grid-cols-3">
           <div class="text-center">
-            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-white">1</div>
-            <h3 class="mb-2 text-lg font-semibold">Elige tu Rifa</h3>
-            <p class="text-gray-600">Explora las rifas disponibles y elige la que más te guste.</p>
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
+              <svg class="h-8 w-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/>
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-semibold text-white">1. Elige tus Números</h3>
+            <p class="text-neutral-400">Selecciona los números que más te gusten o usa la opción aleatoria.</p>
           </div>
           <div class="text-center">
-            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-white">2</div>
-            <h3 class="mb-2 text-lg font-semibold">Compra tus Boletos</h3>
-            <p class="text-gray-600">Selecciona la cantidad de boletos y realiza tu pago de forma segura.</p>
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
+              <svg class="h-8 w-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-semibold text-white">2. Paga por Zelle</h3>
+            <p class="text-neutral-400">Realiza tu pago por Zelle u otro medio externo de forma segura.</p>
           </div>
           <div class="text-center">
-            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-white">3</div>
-            <h3 class="mb-2 text-lg font-semibold">¡Gana!</h3>
-            <p class="text-gray-600">Espera el sorteo en vivo y descubre si eres el ganador.</p>
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
+              <svg class="h-8 w-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 class="mb-2 text-lg font-semibold text-white">3. Confirma y Espera</h3>
+            <p class="text-neutral-400">Envía tu comprobante por WhatsApp y espera el sorteo en vivo.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Confianza y Transparencia -->
+    <section class="bg-dark py-16">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <h2 class="mb-12 text-center text-3xl font-bold text-white">¿Por Qué Confiar en Nosotros?</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="card-premium flex items-start gap-4 p-5">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gold/10">
+              <svg class="h-6 w-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="mb-1 font-semibold text-white">Sorteo en Vivo</h3>
+              <p class="text-sm text-neutral-400">Todos los sorteos se transmiten en vivo para total transparencia.</p>
+            </div>
+          </div>
+
+          <div class="card-premium flex items-start gap-4 p-5">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gold/10">
+              <svg class="h-6 w-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="mb-1 font-semibold text-white">Pagos Verificados</h3>
+              <p class="text-sm text-neutral-400">Cada pago es verificado manualmente antes de confirmar tu participación.</p>
+            </div>
+          </div>
+
+          <div class="card-premium flex items-start gap-4 p-5">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gold/10">
+              <svg class="h-6 w-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="mb-1 font-semibold text-white">Lista Pública</h3>
+              <p class="text-sm text-neutral-400">Los participantes confirmados se publican para total transparencia.</p>
+            </div>
+          </div>
+
+          <div class="card-premium flex items-start gap-4 p-5">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gold/10">
+              <svg class="h-6 w-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="mb-1 font-semibold text-white">Entrega Grabada</h3>
+              <p class="text-sm text-neutral-400">La entrega del premio se graba y publica como prueba.</p>
+            </div>
+          </div>
+
+          <div class="card-premium flex items-start gap-4 p-5">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gold/10">
+              <svg class="h-6 w-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="mb-1 font-semibold text-white">Ayuda Social</h3>
+              <p class="text-sm text-neutral-400">Parte de las ganancias se destina a ayudas documentadas.</p>
+            </div>
+          </div>
+
+          <div class="card-premium flex items-start gap-4 p-5">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gold/10">
+              <svg class="h-6 w-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="mb-1 font-semibold text-white">Reglas Claras</h3>
+              <p class="text-sm text-neutral-400">Cada rifa tiene reglas específicas publicadas y accesibles.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ayuda Social -->
+    <section class="bg-dark-card py-16">
+      <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+        <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
+          <svg class="h-8 w-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </div>
+        <h2 class="mb-4 text-3xl font-bold text-white">Nuestra Parte Social</h2>
+        <p class="mb-6 text-lg text-neutral-400">
+          Una parte de cada rifa se destina a ayudar a familias necesitadas. Todas las ayudas son documentadas y publicadas con total transparencia.
+        </p>
+        <a
+          href="/social"
+          class="inline-flex items-center gap-2 rounded-lg border border-gold/30 bg-gold/10 px-6 py-3 font-semibold text-gold transition-colors hover:bg-gold/20"
+        >
+          Ver Ayudas Realizadas
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
       </div>
     </section>
   </main>
 
   <Footer />
+
+  <!-- Countdown Script -->
+  <script define:vars={{ drawDate: featuredRaffle?.draw_date || '2026-08-15' }}>
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const target = new Date(drawDate).getTime();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </Layout>

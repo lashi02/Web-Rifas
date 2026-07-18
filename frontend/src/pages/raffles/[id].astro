@@ -23,12 +23,12 @@ if (id && supabase) {
 if (!raffle) {
   raffle = {
     id: id || '1',
-    title: 'iPhone 15 Pro Max',
-    description: 'Gana el nuevo iPhone 15 Pro Max de 256GB en color titanio negro. Este dispositivo cuenta con el potente chip A17 Pro, sistema de cámara de triple lente de 48MP, y pantalla Super Retina XDR de 6.7 pulgadas. Incluye cargador y caja original.',
-    image_url: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800',
+    title: 'Combo Antiapagones: EcoFlow Delta 2 + TV + Panel Solar',
+    description: 'Solución completa para apagones: estación de energía portátil EcoFlow Delta 2, smart TV 50" y panel solar para recarga independiente. Incluye todos los accesorios y garantía de fábrica.',
+    image_url: 'https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?w=800',
     ticket_price: 50,
-    total_tickets: 100,
-    sold_tickets: 67,
+    total_tickets: 1000,
+    sold_tickets: 742,
     status: 'active',
     draw_date: '2026-08-15',
     created_at: '2026-07-01',
@@ -46,78 +46,179 @@ if (raffle.status !== 'active') {
 <Layout title={raffle.title}>
   <Header />
 
-  <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-    <a href="/raffles" class="mb-8 inline-flex items-center gap-2 text-primary hover:underline">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-      </svg>
-      Volver a Rifas
-    </a>
+  <main class="bg-dark py-10">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <a href="/raffles" class="mb-8 inline-flex items-center gap-2 text-gold transition-colors hover:text-gold-light">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Volver a Rifas
+      </a>
 
-    <div class="grid gap-10 lg:grid-cols-5">
-      <div class="lg:col-span-3">
-        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white">
-          <img
-            src={raffle.image_url}
-            alt={raffle.title}
-            class="aspect-video w-full object-cover"
-          />
+      <div class="grid gap-10 lg:grid-cols-5">
+        <!-- Imagen y Galería -->
+        <div class="lg:col-span-3">
+          <div class="card-premium overflow-hidden">
+            <img
+              src={raffle.image_url}
+              alt={raffle.title}
+              class="aspect-video w-full object-cover"
+            />
+          </div>
+        </div>
+
+        <!-- Detalle y Acciones -->
+        <div class="lg:col-span-2">
+          <div class="card-premium p-6">
+            <span class="mb-3 inline-block rounded-full border border-green/30 bg-green/20 px-3 py-1 text-xs font-semibold text-green">
+              Activa
+            </span>
+
+            <h1 class="mb-3 text-2xl font-extrabold text-white">{raffle.title}</h1>
+            <p class="mb-6 leading-relaxed text-neutral-400">{raffle.description}</p>
+
+            <!-- Info Cards -->
+            <div class="mb-6 space-y-4">
+              <div class="flex items-center justify-between rounded-lg bg-dark p-4">
+                <span class="text-neutral-500">Precio por número</span>
+                <span class="text-2xl font-bold text-gold">${raffle.ticket_price.toFixed(2)}</span>
+              </div>
+
+              <div class="flex items-center justify-between rounded-lg bg-dark p-4">
+                <span class="text-neutral-500">Números disponibles</span>
+                <span class="text-lg font-bold text-green">{availableTickets}</span>
+              </div>
+
+              <div class="flex items-center justify-between rounded-lg bg-dark p-4">
+                <span class="text-neutral-500">Fecha del sorteo</span>
+                <span class="font-semibold text-white">
+                  {new Date(raffle.draw_date).toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </span>
+              </div>
+            </div>
+
+            <!-- Barra de Progreso -->
+            <div class="mb-6">
+              <div class="mb-2 flex items-center justify-between text-sm">
+                <span class="text-neutral-400">Progreso de venta</span>
+                <span class="font-medium text-neutral-300">{raffle.sold_tickets} / {raffle.total_tickets} vendidos</span>
+              </div>
+              <div class="h-3 overflow-hidden rounded-full bg-dark-border">
+                <div
+                  class="h-full rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light transition-all duration-500"
+                  style={`width: ${soldPercentage}%`}
+                >
+                </div>
+              </div>
+              <p class="mt-2 text-right text-sm text-gold">{soldPercentage.toFixed(0)}% vendido</p>
+            </div>
+
+            <!-- Botón Principal -->
+            <button
+              class="mb-4 w-full rounded-xl bg-gold py-4 text-lg font-bold text-dark transition-colors hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={availableTickets === 0}
+            >
+              {availableTickets === 0 ? 'Agotado' : `Seleccionar Números - $${raffle.ticket_price.toFixed(2)}`}
+            </button>
+
+            <!-- Botones Secundarios -->
+            <div class="flex gap-3">
+              <a
+                href="https://wa.me/1234567890?text=Hola,%20quiero%20información%20sobre%20la%20rifa"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-green/30 bg-green/10 py-3 font-semibold text-green transition-colors hover:bg-green/20"
+              >
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                WhatsApp
+              </a>
+              <button
+                class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-dark-border bg-dark py-3 font-semibold text-neutral-300 transition-colors hover:border-gold hover:text-gold"
+              >
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+                Compartir
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="lg:col-span-2">
-        <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <span class="mb-3 inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
-            Activa
-          </span>
-
-          <h1 class="mb-3 text-2xl font-extrabold text-gray-900">{raffle.title}</h1>
-          <p class="mb-6 leading-relaxed text-gray-600">{raffle.description}</p>
-
-          <div class="mb-6 space-y-4">
-            <div class="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
-              <span class="text-gray-500">Precio por boleto</span>
-              <span class="text-2xl font-bold text-primary">${raffle.ticket_price.toFixed(2)}</span>
+      <!-- Reglas de la Rifa -->
+      <div class="mt-10">
+        <div class="card-premium p-6">
+          <h2 class="mb-4 text-xl font-bold text-white">Reglas del Sorteo</h2>
+          <div class="grid gap-4 text-neutral-400 sm:grid-cols-2">
+            <div class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              <div>
+                <p class="font-semibold text-white">Fecha del sorteo</p>
+                <p class="text-sm">{new Date(raffle.draw_date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              </div>
             </div>
-
-            <div class="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
-              <span class="text-gray-500">Boletos disponibles</span>
-              <span class="text-lg font-bold text-green-600">{availableTickets}</span>
+            <div class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              <div>
+                <p class="font-semibold text-white">Método</p>
+                <p class="text-sm">Sorteo en vivo por redes sociales</p>
+              </div>
             </div>
-
-            <div class="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
-              <span class="text-gray-500">Fecha del sorteo</span>
-              <span class="font-semibold text-gray-900">
-                {new Date(raffle.draw_date).toLocaleDateString('es-ES', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </span>
+            <div class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <div>
+                <p class="font-semibold text-white">Límite de reserva</p>
+                <p class="text-sm">30 minutos para confirmar pago</p>
+              </div>
             </div>
-          </div>
-
-          <div class="mb-6">
-            <div class="mb-2 flex items-center justify-between text-sm">
-              <span class="text-gray-500">Progreso de venta</span>
-              <span class="font-medium">{raffle.sold_tickets} / {raffle.total_tickets} vendidos</span>
+            <div class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+              </svg>
+              <div>
+                <p class="font-semibold text-white">Forma de pago</p>
+                <p class="text-sm">Zelle, transferencia bancaria</p>
+              </div>
             </div>
-            <div class="h-3 overflow-hidden rounded-full bg-gray-200">
-              <div
-                class="h-full rounded-full bg-accent transition-all duration-500"
-                style={`width: ${soldPercentage}%`}
-              >
+            <div class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              <div>
+                <p class="font-semibold text-white">Entrega</p>
+                <p class="text-sm">Entrega personal o envío a domicilio</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <div>
+                <p class="font-semibold text-white">Condiciones</p>
+                <p class="text-sm">Los números se confirman solo después de verificar el pago</p>
               </div>
             </div>
           </div>
-
-          <button
-            class="w-full rounded-xl bg-primary py-4 text-lg font-bold text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
-            disabled={availableTickets === 0}
-          >
-            {availableTickets === 0 ? 'Agotado' : `Comprar Boleto - $${raffle.ticket_price.toFixed(2)}`}
-          </button>
         </div>
+      </div>
+
+      <!-- Textos de advertencia -->
+      <div class="mt-6 space-y-2 text-center text-sm text-neutral-500">
+        <p>Los números quedan confirmados solo después de verificar el pago.</p>
+        <p>Si la reserva vence sin pago, los números vuelven a estar disponibles.</p>
+        <p>El sorteo se realizará en vivo y el resultado será publicado en esta página.</p>
       </div>
     </div>
   </main>

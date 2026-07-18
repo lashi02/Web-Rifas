@@ -1,16 +1,68 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #6d28d9;
-  --color-primary-dark: #5b21b6;
-  --color-accent: #f59e0b;
-  --color-accent-dark: #d97706;
+  /* === Colores principales === */
+  --color-dark: #0a0a0a;
+  --color-dark-card: #141414;
+  --color-dark-border: #262626;
+  --color-dark-hover: #1a1a1a;
+
+  --color-gold: #d4a843;
+  --color-gold-light: #e8c36a;
+  --color-gold-dark: #b8922e;
+
+  --color-blue: #3b82f6;
+  --color-blue-light: #60a5fa;
+
+  --color-green: #22c55e;
+  --color-green-dark: #16a34a;
+
+  --color-red: #ef4444;
+  --color-amber: #eab308;
+  --color-amber-dark: #ca8a04;
+
+  /* === Tipografía === */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* === Sombras premium === */
+  --shadow-gold: 0 0 20px rgba(212, 168, 67, 0.15);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 40px rgba(212, 168, 67, 0.1);
 }
 
+/* === Estilos globales === */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--color-dark);
+  color: #e5e5e5;
+}
+
+/* === Utilidades personalizadas === */
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.border-glow {
+  border: 1px solid var(--color-gold);
+  box-shadow: var(--shadow-gold);
+}
+
+.card-premium {
+  background: var(--color-dark-card);
+  border: 1px solid var(--color-dark-border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+}
+
+.card-premium:hover {
+  border-color: var(--color-gold);
+  box-shadow: var(--shadow-gold);
 }
