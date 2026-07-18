@@ -1,0 +1,121 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import RaffleCard from '../components/RaffleCard.astro';
+import { supabase } from '../lib/supabase';
+import type { Raffle } from '../types';
+
+const { data: raffles } = supabase
+  ? await supabase
+      .from('raffles')
+      .select('*')
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+  : { data: null };
+
+const mockRaffles: Raffle[] = [
+  {
+    id: '1',
+    title: 'iPhone 15 Pro Max',
+    description: 'Gana el nuevo iPhone 15 Pro Max de 256GB en color titanio negro.',
+    image_url: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800',
+    ticket_price: 50,
+    total_tickets: 100,
+    sold_tickets: 67,
+    status: 'active',
+    draw_date: '2026-08-15',
+    created_at: '2026-07-01',
+  },
+  {
+    id: '2',
+    title: 'PlayStation 5 + 3 Juegos',
+    description: 'Consola PS5 con disco de 1TB junto con 3 juegos exclusivos.',
+    image_url: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=800',
+    ticket_price: 30,
+    total_tickets: 200,
+    sold_tickets: 142,
+    status: 'active',
+    draw_date: '2026-08-20',
+    created_at: '2026-07-05',
+  },
+  {
+    id: '3',
+    title: 'Viaje a Cancún 5 Noches',
+    description: 'Paquete todo incluido para 2 personas: vuelo, hotel y tours.',
+    image_url: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800',
+    ticket_price: 100,
+    total_tickets: 150,
+    sold_tickets: 89,
+    status: 'active',
+    draw_date: '2026-09-01',
+    created_at: '2026-07-10',
+  },
+];
+
+const rafflesToShow = raffles?.length ? raffles : mockRaffles;
+---
+
+<Layout title="Inicio">
+  <Header />
+
+  <main>
+    <section class="bg-gradient-to-br from-primary to-purple-900 py-20 text-center text-white">
+      <div class="mx-auto max-w-4xl px-4">
+        <h1 class="mb-4 text-5xl font-extrabold tracking-tight">
+          Participa y <span class="text-accent">Gana</span> Increíbles Premios
+        </h1>
+        <p class="mb-8 text-lg text-purple-200">
+          Rifas 100% transparentes y seguras. Elige tu rifa favorita, compra tus boletos y espera el sorteo.
+        </p>
+        <a
+          href="/raffles"
+          class="inline-block rounded-lg bg-accent px-8 py-3 text-lg font-bold text-white transition-colors hover:bg-accent-dark"
+        >
+          Ver Rifas Disponibles
+        </a>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <h2 class="mb-8 text-center text-3xl font-bold text-gray-900">Rifas Destacadas</h2>
+
+      {rafflesToShow.length > 0 ? (
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {rafflesToShow.map((raffle) => (
+            <RaffleCard raffle={raffle} />
+          ))}
+        </div>
+      ) : (
+        <p class="text-center text-gray-500">No hay rifas disponibles en este momento.</p>
+      )}
+    </section>
+
+    <section class="bg-gray-100 py-16">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <h2 class="mb-12 text-center text-3xl font-bold text-gray-900">¿Cómo Funciona?</h2>
+        <div class="grid gap-8 sm:grid-cols-3">
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-white">1</div>
+            <h3 class="mb-2 text-lg font-semibold">Elige tu Rifa</h3>
+            <p class="text-gray-600">Explora las rifas disponibles y elige la que más te guste.</p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-white">2</div>
+            <h3 class="mb-2 text-lg font-semibold">Compra tus Boletos</h3>
+            <p class="text-gray-600">Selecciona la cantidad de boletos y realiza tu pago de forma segura.</p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-white">3</div>
+            <h3 class="mb-2 text-lg font-semibold">¡Gana!</h3>
+            <p class="text-gray-600">Espera el sorteo en vivo y descubre si eres el ganador.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

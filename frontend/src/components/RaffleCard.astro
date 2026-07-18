@@ -1,0 +1,58 @@
+---
+import type { Raffle } from '../../types';
+
+interface Props {
+  raffle: Raffle;
+}
+
+const { raffle } = Astro.props;
+const availableTickets = raffle.total_tickets - raffle.sold_tickets;
+const soldPercentage = (raffle.sold_tickets / raffle.total_tickets) * 100;
+---
+
+<article class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+  <div class="relative aspect-video overflow-hidden">
+    <img
+      src={raffle.image_url}
+      alt={raffle.title}
+      class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+    />
+    <span class={`absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-semibold text-white ${
+      raffle.status === 'active' ? 'bg-green-500' : 'bg-gray-500'
+    }`}>
+      {raffle.status === 'active' ? 'Activa' : 'Finalizada'}
+    </span>
+  </div>
+
+  <div class="p-5">
+    <h3 class="mb-2 text-lg font-bold text-gray-900">{raffle.title}</h3>
+    <p class="mb-4 line-clamp-2 text-sm text-gray-600">{raffle.description}</p>
+
+    <div class="mb-4">
+      <div class="mb-1 flex items-center justify-between text-sm">
+        <span class="text-gray-500">Boletos vendidos</span>
+        <span class="font-medium">{raffle.sold_tickets} / {raffle.total_tickets}</span>
+      </div>
+      <div class="h-2 overflow-hidden rounded-full bg-gray-200">
+        <div
+          class="h-full rounded-full bg-accent transition-all duration-500"
+          style={`width: ${soldPercentage}%`}
+        >
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-xs text-gray-500">Precio por boleto</p>
+        <p class="text-xl font-bold text-primary">${raffle.ticket_price.toFixed(2)}</p>
+      </div>
+      <a
+        href={`/raffles/${raffle.id}`}
+        class="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+      >
+        Ver detalles
+      </a>
+    </div>
+  </div>
+</article>
