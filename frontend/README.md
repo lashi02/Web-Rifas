@@ -109,13 +109,3 @@ Copiar `.env.example` a `.env` y configurar:
 PUBLIC_SUPABASE_URL=tu-url-de-supabase
 PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
 ```
-
-## Próximos Pasos
-
-- [ ] Conectar Supabase para datos en tiempo real
-- [ ] Implementar selector de números interactivo
-- [ ] Crear autenticación para panel admin
-- [ ] Agregar notificaciones por email/Telegram
-- [ ] Implementar sistema de referidos
-- [ ] Optimizar imágenes a WebP
-- [ ] Agregar analytics (Google Analytics / Meta Pixel)
