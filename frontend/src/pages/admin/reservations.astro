@@ -2,8 +2,8 @@
 export const prerender = true;
 
 import Layout from '../../layouts/Layout.astro';
-import ReservationActions from '../../components/admin/ReservationActions';
-import ClientDetails from '../../components/admin/ClientDetails';
+import ReservationActions from '../../features/admin/Reservations/components/ReservationActions';
+import ClientDetails from '../../features/admin/Reservations/components/ClientDetails';
 
 const reservations = [
   { id: '1', raffle: 'EcoFlow Delta 2', name: 'Pedro S.', phone: '+53 5555 9012', province: 'Santa Clara', numbers: [155, 288], amount: 100, time: 'Hace 15 min', status: 'pending' },

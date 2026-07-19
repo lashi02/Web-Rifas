@@ -4,11 +4,11 @@ export const prerender = false;
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../layouts/Header/index.astro';
 import Footer from '../../layouts/Footer/index.astro';
-import CountdownTimer from '../../components/CountdownTimer';
-import ImageGallery from '../../components/ImageGallery';
-import RaffleRules from '../../components/RaffleRules.astro';
-import ParticipantList from '../../components/ParticipantList.astro';
-import RaffleUpdates from '../../components/RaffleUpdates.astro';
+import CountdownTimer from '../../components/ui/CountdownTimer';
+import ImageGallery from '../../components/ui/ImageGallery';
+import RaffleRules from '../../features/raffles/RaffleDetail/components/RaffleRules.astro';
+import ParticipantList from '../../features/raffles/RaffleDetail/components/ParticipantList.astro';
+import RaffleUpdates from '../../features/raffles/RaffleDetail/components/RaffleUpdates.astro';
 import { supabase } from '../../lib/supabase';
 import type { Raffle } from '../../types';
 
