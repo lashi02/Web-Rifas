@@ -3,17 +3,18 @@ export interface Raffle {
   title: string;
   description: string;
   image_url: string;
-  images: string[];
+  images?: string[];
   ticket_price: number;
   total_tickets: number;
   sold_tickets: number;
-  reserved_tickets: number;
+  reserved_tickets: number[]
+  free_tickets: number[];
   status: 'active' | 'finished' | 'cancelled';
   draw_date: string;
   created_at: string;
-  rules: RaffleRules;
-  social_aid_percentage: number;
-  payment_methods: PaymentMethod[];
+  rules?: RaffleRules;
+  social_aid_percentage?: number;
+  payment_methods?: PaymentMethod[];
 }
 
 export interface RaffleRules {
