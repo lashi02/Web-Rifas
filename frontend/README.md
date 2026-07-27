@@ -88,6 +88,7 @@ frontend/src/
 - **Datos mock** realistas para desarrollo (EcoFlow Delta 2, PS5, etc.)
 
 ## Comandos
+npm install o pnpm install desde muy importante de la carpeta fronted
 
 ```bash
 # Instalar dependencias
