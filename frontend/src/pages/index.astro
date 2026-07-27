@@ -4,12 +4,13 @@ export const prerender = true;
 import Layout from '../layouts/Layout.astro';
 import Header from '../layouts/Header/index.astro';
 import Footer from '../layouts/Footer/index.astro';
-import RaffleCard from './raffles/_components/RaffleCard/index.astro';
 import { supabase } from '../lib/supabase';
 import type { Raffle } from '../types';
+import { mockActiveRaffles } from './_ActiveRaffles/config/active-raffles.config';
 import {
   Hero,
   FeaturedRaffle,
+  ActiveRaffles,
   HowItWorks,
   Trust,
   WinnersHome,
@@ -24,46 +25,7 @@ const { data: raffles } = supabase
       .order('created_at', { ascending: false })
   : { data: null };
 
-const mockRaffles: Raffle[] = [
-  {
-    id: '1',
-    title: 'Combo Antiapagones: EcoFlow Delta 2 + TV + Panel Solar',
-    description: 'Solución completa para apagones: estación de energía portátil, smart TV y panel solar para recarga independiente.',
-    image_url: 'https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?w=800',
-    ticket_price: 50,
-    total_tickets: 1000,
-    sold_tickets: 742,
-    status: 'active',
-    draw_date: '2026-08-15',
-    created_at: '2026-07-01',
-  },
-  {
-    id: '2',
-    title: 'PlayStation 5 + 3 Juegos',
-    description: 'Consola PS5 con disco de 1TB junto con 3 juegos exclusivos.',
-    image_url: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=800',
-    ticket_price: 30,
-    total_tickets: 500,
-    sold_tickets: 312,
-    status: 'active',
-    draw_date: '2026-08-20',
-    created_at: '2026-07-05',
-  },
-  {
-    id: '3',
-    title: 'Viaje a Cancún 5 Noches Todo Incluido',
-    description: 'Paquete completo para 2 personas: vuelo, hotel 5 estrellas, tours y traslados.',
-    image_url: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800',
-    ticket_price: 100,
-    total_tickets: 300,
-    sold_tickets: 189,
-    status: 'active',
-    draw_date: '2026-09-01',
-    created_at: '2026-07-10',
-  },
-];
-
-const rafflesToShow = raffles?.length ? raffles : mockRaffles;
+const rafflesToShow = (raffles?.length ? raffles : mockActiveRaffles) as Raffle[];
 const featuredRaffle = rafflesToShow[0];
 ---
 
@@ -72,25 +34,8 @@ const featuredRaffle = rafflesToShow[0];
 
   <main>
     <Hero />
-
     {featuredRaffle && <FeaturedRaffle raffle={featuredRaffle} />}
-
-    <section class="bg-dark py-16">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 class="mb-8 text-center text-3xl font-bold text-white">Rifas Activas</h2>
-
-        {rafflesToShow.length > 0 ? (
-          <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {rafflesToShow.map((raffle) => (
-              <RaffleCard raffle={raffle} />
-            ))}
-          </div>
-        ) : (
-          <p class="text-center text-neutral-500">No hay rifas disponibles en este momento.</p>
-        )}
-      </div>
-    </section>
-
+    <ActiveRaffles raffles={rafflesToShow} />
     <HowItWorks />
     <Trust />
     <WinnersHome />
