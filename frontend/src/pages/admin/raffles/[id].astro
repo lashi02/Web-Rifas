@@ -1,0 +1,36 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import RaffleDetail from './_components/RaffleDetail';
+import { getRaffleById, getParticipantsByRaffle, generateTickets } from './config/raffles.config';
+
+const { id } = Astro.params;
+const raffle = id ? getRaffleById(id) : undefined;
+
+if (!raffle) {
+  return Astro.redirect('/admin/raffles');
+}
+
+const participants = getParticipantsByRaffle(raffle.id);
+const { available } = generateTickets(raffle);
+---
+
+<AdminLayout title={`${raffle.title} - Admin`} active="raffles">
+  <RaffleDetail
+    raffleId={raffle.id}
+    title={raffle.title}
+    description={raffle.description}
+    image_url={raffle.image_url}
+    ticket_price={raffle.ticket_price}
+    total_tickets={raffle.total_tickets}
+    sold_tickets={raffle.sold_tickets}
+    status={raffle.status}
+    draw_date={raffle.draw_date}
+    created_at={raffle.created_at}
+    participants={participants}
+    availableNumbers={available}
+    social_aid_percentage={raffle.social_aid_percentage}
+    client:load
+  />
+</AdminLayout>

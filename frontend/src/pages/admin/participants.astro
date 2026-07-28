@@ -1,0 +1,11 @@
+---
+export const prerender = true;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminParticipantsPage from './_Participants/components/AdminParticipantsPage';
+import { participantStats } from './_Participants/config/participants.config';
+---
+
+<AdminLayout title="Participantes - Admin" active="participants" reservationsCount={participantStats.pending}>
+  <AdminParticipantsPage client:load />
+</AdminLayout>

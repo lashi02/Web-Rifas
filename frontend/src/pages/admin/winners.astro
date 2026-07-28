@@ -1,0 +1,10 @@
+---
+export const prerender = true;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminWinnersPage from './_Winners/components/AdminWinnersPage';
+---
+
+<AdminLayout title="Ganadores - Admin" active="winners">
+  <AdminWinnersPage client:load />
+</AdminLayout>

@@ -1,0 +1,13 @@
+---
+export const prerender = true;
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import AdminRafflesPage from './_components/AdminRafflesPage';
+import { getRaffles } from './config/raffles.config';
+
+const raffles = getRaffles();
+---
+
+<AdminLayout title="Administrar Rifas - Admin" active="raffles">
+  <AdminRafflesPage initialRaffles={raffles} client:load />
+</AdminLayout>

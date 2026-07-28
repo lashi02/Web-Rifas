@@ -37,7 +37,7 @@ import { pendingReservations, recentActivity, stats } from './_Reservations/conf
       </div>
     </div>
 
-    <div class="card-premium p-5">
+    <a href="/admin/reservations?tab=pending" class="card-premium block p-5 transition-colors hover:border-gold/50">
       <div class="flex items-center justify-between">
         <div>
           <p class="text-sm text-neutral-500">Reservas Pendientes</p>
@@ -49,7 +49,7 @@ import { pendingReservations, recentActivity, stats } from './_Reservations/conf
           </svg>
         </div>
       </div>
-    </div>
+    </a>
 
     <div class="card-premium p-5">
       <div class="flex items-center justify-between">
@@ -89,7 +89,7 @@ import { pendingReservations, recentActivity, stats } from './_Reservations/conf
       <div class="divide-y divide-dark-border">
         {pendingReservations.map((res) => (
           <div class="flex items-center justify-between p-4 transition-colors hover:bg-dark-hover">
-            <div class="flex items-center gap-3">
+            <a href={`/admin/reservations?tab=pending&search=${encodeURIComponent(res.name)}`} class="flex items-center gap-3 flex-1 min-w-0">
               <div class="flex h-10 w-10 items-center justify-center rounded-full bg-amber/20 text-sm font-bold text-amber">
                 {res.name.charAt(0)}
               </div>
@@ -98,7 +98,7 @@ import { pendingReservations, recentActivity, stats } from './_Reservations/conf
                 <p class="text-xs text-neutral-500">{res.raffle} · {res.time}</p>
                 <p class="text-xs text-neutral-600">{res.phone}</p>
               </div>
-            </div>
+            </a>
             <div class="flex items-center gap-3">
               <div class="text-right">
                 <p class="text-sm font-semibold text-gold">${res.amount}</p>
