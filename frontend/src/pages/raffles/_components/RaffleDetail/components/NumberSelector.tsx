@@ -166,8 +166,9 @@ export default function NumberSelector({
 
       {/* FORM MODAL */}
       {step === 'form' && (
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setStep('select')}>
-          <div class="w-full max-w-lg rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
+        <div class="fixed inset-0 z-50 overflow-y-auto bg-black/70" onClick={() => setStep('select')}>
+          <div class="flex min-h-full items-start justify-center px-4 pb-8 pt-16 sm:items-center sm:p-4">
+            <div class="w-full max-w-lg rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div class="mb-6 flex items-center justify-between">
               <h3 class="text-xl font-bold text-white">Tus datos</h3>
               <button onClick={() => setStep('select')} class="text-neutral-500 hover:text-white">
@@ -250,12 +251,14 @@ export default function NumberSelector({
             </form>
           </div>
         </div>
+      </div>
       )}
 
       {/* CONFIRMATION MODAL */}
       {step === 'confirm' && (
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div class="w-full max-w-md rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl text-center">
+        <div class="fixed inset-0 z-50 overflow-y-auto bg-black/70">
+          <div class="flex min-h-full items-start justify-center px-4 pb-8 pt-16 sm:items-center sm:p-4">
+            <div class="w-full max-w-md rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl text-center">
             <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gold/20">
               <svg class="h-8 w-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -295,6 +298,7 @@ export default function NumberSelector({
             </div>
           </div>
         </div>
+      </div>
       )}
     </>
   );

@@ -27,7 +27,7 @@ export default function ClientDetails({ client, children }: Props) {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 p-4 sm:items-center" onClick={() => setIsOpen(false)}>
           <div className="w-full max-w-lg rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-xl font-bold text-white">Datos del Cliente</h3>
