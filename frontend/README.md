@@ -88,21 +88,34 @@ frontend/src/
 - **Datos mock** realistas para desarrollo (EcoFlow Delta 2, PS5, etc.)
 
 ## Comandos
-npm install o pnpm install desde muy importante de la carpeta fronted
+
+> **Importante:** el gestor de paquetes oficial del proyecto es **pnpm**. No uses `npm install` ni `yarn`. Ejecuta los comandos desde la carpeta `frontend/`.
 
 ```bash
 # Instalar dependencias
-npm install
+pnpm install
 
 # Desarrollo
-npm run dev          # Servidor en localhost:4321
+pnpm dev            # Servidor en localhost:4321
 
 # Build
-npm run build        # Build de producción
-npm run preview      # Preview del build
+pnpm build          # Build de producción
+pnpm preview        # Preview del build
 ```
 
+## Flujo de Trabajo en Equipo
+
+- Cada miembro trabaja en **su rama personal** (ej: `Lachy`, `Ernesto`).
+- Los cambios se integran en la rama `development` (rama de integración).
+- `main` es solo para producción estable.
+- **Reglas obligatorias:**
+  - Siempre usar `pnpm install` después de hacer pull para sincronizar dependencias.
+  - Nunca subir a git: `.env` (usar `.env.example`), `.venv`, `node_modules/`, `dist/`, lockfiles de npm (`package-lock.json`).
+  - El único lockfile permitido es `pnpm-lock.yaml`.
+
 ## Variables de Entorno
+
+Copiar `.env.example` a `.env` y configurar:
 
 Copiar `.env.example` a `.env` y configurar:
 
