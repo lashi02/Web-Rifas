@@ -1,0 +1,38 @@
+[project]
+name = "web-rifas-backend"
+version = "0.1.0"
+description = "API REST de Web-Rifas (rifas y sorteos) - Django + DRF"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=6.0",
+    "djangorestframework>=3.16",
+    "djangorestframework-simplejwt>=5.5",
+    "django-cors-headers>=4.7",
+    "django-environ>=0.12",
+    "django-filter>=24.3",
+    "psycopg[binary]>=3.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-django>=4.10",
+]
+
+[project.scripts]
+app = "config.wsgi:application"
+
+[tool.vercel]
+entrypoint = "config.wsgi:application"
+
+[tool.setuptools.packages.find]
+include = ["config*", "apps*"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.dev"
+pythonpath = ["."]
+python_files = ["test_*.py", "tests.py"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

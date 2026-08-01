@@ -11,6 +11,11 @@ node_modules/
 dist/
 .astro/
 
+# Django (backend)
+backend/db.sqlite3
+backend/staticfiles/
+backend/.pytest_cache/
+
 # Agente de planificación
 .mimocode/
 
