@@ -78,8 +78,8 @@ export default function ReservationActions({ reservation, onApprove, onCancel }:
 
       {/* Approve Confirmation Modal */}
       {showApproveConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <div className="w-full max-w-md rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl">
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 p-4 sm:items-center">
+          <div className="my-auto w-full max-w-md rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl">
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green/20 mx-auto">
               <svg className="h-7 w-7 text-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -115,8 +115,8 @@ export default function ReservationActions({ reservation, onApprove, onCancel }:
 
       {/* Cancel Confirmation Modal */}
       {showCancelConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <div className="w-full max-w-md rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl">
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 p-4 sm:items-center">
+          <div className="my-auto w-full max-w-md rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl">
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red/20 mx-auto">
               <svg className="h-7 w-7 text-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>

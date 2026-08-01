@@ -5,10 +5,10 @@ interface Client {
   phone: string;
   province: string;
   beneficiary?: string;
-  raffle: string;
+  raffle?: string;
   numbers: number[];
   amount: number;
-  time: string;
+  time?: string;
   status: string;
 }
 
@@ -27,7 +27,7 @@ export default function ClientDetails({ client, children }: Props) {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 p-4 sm:items-center" onClick={() => setIsOpen(false)}>
           <div className="w-full max-w-lg rounded-2xl border border-dark-border bg-dark-card p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-xl font-bold text-white">Datos del Cliente</h3>
@@ -44,7 +44,7 @@ export default function ClientDetails({ client, children }: Props) {
               </div>
               <div>
                 <h4 className="text-lg font-bold text-white">{client.name}</h4>
-                <p className="text-sm text-neutral-400">{client.raffle}</p>
+                {client.raffle && <p className="text-sm text-neutral-400">{client.raffle}</p>}
               </div>
             </div>
 
@@ -84,10 +84,12 @@ export default function ClientDetails({ client, children }: Props) {
                 <span className="text-lg font-bold text-gold">${client.amount}</span>
               </div>
 
-              <div className="flex items-center justify-between rounded-lg bg-dark p-4">
-                <span className="text-sm text-neutral-500">Hora de reserva</span>
-                <span className="text-sm text-white">{client.time}</span>
-              </div>
+              {client.time && (
+                <div className="flex items-center justify-between rounded-lg bg-dark p-4">
+                  <span className="text-sm text-neutral-500">Hora de reserva</span>
+                  <span className="text-sm text-white">{client.time}</span>
+                </div>
+              )}
 
               <div className="flex items-center justify-between rounded-lg bg-dark p-4">
                 <span className="text-sm text-neutral-500">Estado</span>

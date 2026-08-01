@@ -13,8 +13,11 @@ export interface Raffle {
   draw_date: string;
   created_at: string;
   rules?: RaffleRules;
+  featured?: boolean;
   social_aid_percentage?: number;
   payment_methods?: PaymentMethod[];
+  winner_id?: string;
+  winner_ticket_number?: number;
 }
 
 export interface RaffleRules {
