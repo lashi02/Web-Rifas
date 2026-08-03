@@ -1,0 +1,41 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Dependencias
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Django (backend)
+backend/db.sqlite3
+backend/staticfiles/
+backend/.pytest_cache/
+
+# Agente de planificación
+.mimocode/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Documentos
+*.pdf
+
+# macOS
+.DS_Store
+
+# IDEs
+.idea/
+.vscode/
