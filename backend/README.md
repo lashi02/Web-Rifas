@@ -41,7 +41,31 @@ backend/
 
 ## Setup local
 
-Requisitos: Python 3.12+ (probado con 3.13). El proyecto no usa `uv`.
+Requisitos: Python 3.12+ (probado con 3.13).
+
+### Con `uv`
+
+```powershell
+cd backend
+uv sync --extra dev
+
+# Configura variables (opcional; sin .env usa SQLite y DEBUG=False)
+Copy-Item .env.example .env
+
+# Migraciones + seed demo (replica los mocks del frontend)
+uv run python manage.py migrate
+uv run python manage.py seed_demo
+
+# Servidor de desarrollo
+uv run python manage.py runserver
+```
+
+Verifica con `uv run python manage.py check`. El usuario admin del seed es
+`admin` / `admin123` (accede al panel `/admin/` y a `/api/reservations/`).
+
+### Flujo anterior con pip
+
+Si prefieres seguir con `pip`, el equivalente era:
 
 ```powershell
 cd backend
@@ -60,8 +84,7 @@ python manage.py seed_demo
 python manage.py runserver
 ```
 
-Verifica con `python manage.py check`. El usuario admin del seed es
-`admin` / `admin123` (accede al panel `/admin/` y a `/api/reservations/`).
+Verifica con `python manage.py check`.
 
 ## Variables de entorno (`.env`)
 
@@ -101,8 +124,8 @@ estructurales.
 ## Tests
 
 ```powershell
-pip install -e ".[dev]"
-pytest
+uv sync --extra dev
+uv run pytest
 ```
 
 ## Despliegue en Vercel
@@ -117,6 +140,16 @@ pytest
 > Nota: en Vercel Hobby los deploys deben producirse vía git (sin CLI por token).
 > Con `DATABASE_URL` la BD usa `psycopg` v3 (`psycopg[binary]`) para minimizar el
 > tamaño del bundle.
+
+## Migración a `uv`
+
+`uv` reemplaza el combo de `venv + pip + requirements.txt` por un flujo único:
+
+- `uv sync --extra dev` crea el entorno, resuelve dependencias y deja el proyecto listo.
+- `uv run ...` ejecuta comandos dentro del entorno sin activarlo manualmente.
+- `uv lock` genera o actualiza el lockfile para fijar versiones exactas.
+
+En este backend ya tienes `pyproject.toml`, así que la migración consiste sobre todo en cambiar los comandos de uso diario. No hace falta mantener `requirements.txt` si el proyecto se instala desde `pyproject.toml`.
 
 ## Roadmap (siguiente fase)
 
