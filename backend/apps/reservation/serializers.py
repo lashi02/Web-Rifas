@@ -1,23 +1,26 @@
-
-import json
-
 from rest_framework import serializers
 
-from backend.apps import Reservation
+from apps.reservation.models import Reservation
 
 
 class ReservationSerializer(serializers.ModelSerializer):
-    """Serializador de reservaciones, cliente."""
+    """Serializador de reservaciones."""
+
     class Meta:
         model = Reservation
-        fields = ["__all__"]
+        fields = "__all__"
 
-    def create(self, validated_data):
-        numbers = validated_data.pop("numbers", [])
-        validated_data["numbers"] = json.dumps(numbers)  # [1,2] -> "[1,2]"
-        return super().create(validated_data)
-
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["numbers"] = json.loads(data["numbers"] or "[]")  # "[1,2]" -> [1,2]
-        return data
+    def validate(self, attrs):
+        raffle = attrs.get("raffle_fk")
+        numbers = attrs.get("numbers", [])
+        if raffle and numbers:
+            taken = set(raffle.reserved_numbers)
+            if set(numbers) & taken:
+                raise serializers.ValidationError(
+                    {"numbers": "Algunos números ya están reservados."}
+                )
+            if any(n < 1 or n > raffle.total_tickets for n in numbers):
+                raise serializers.ValidationError(
+                    {"numbers": "Hay números fuera del rango de la rifa."}
+                )
+        return attrs

@@ -9,7 +9,7 @@ y `free_tickets`.
 
 from django.db import models
 
-from apps.enums.status import Status
+from apps.enums.status import Status, PaymentStatus
 
 
 class Raffle(models.Model):
@@ -34,3 +34,29 @@ class Raffle(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    # === Campos calculados desde las reservas (fuente única de verdad) ===
+
+    @property
+    def reserved_numbers(self):
+        """Números tomados por cualquier reserva de esta rifa."""
+        numbers = set()
+        for reservation in self.reservations.all():
+            numbers.update(reservation.numbers)
+        return sorted(numbers)
+
+    @property
+    def sold_count(self):
+        """Cantidad de números vendidos (reservas confirmadas)."""
+        return sum(
+            len(reservation.numbers)
+            for reservation in self.reservations.filter(
+                status=PaymentStatus.COMPLETED
+            )
+        )
+
+    @property
+    def free_numbers(self):
+        """Números que aún no han sido reservados."""
+        reserved = set(self.reserved_numbers)
+        return [n for n in range(1, self.total_tickets + 1) if n not in reserved]
