@@ -25,6 +25,8 @@ class Raffle(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     featured = models.BooleanField(default=False)
+    # Minutos de vigencia de una reserva pendiente antes de vencer.
+    reservation_limit_minutes = models.PositiveIntegerField(default=30)
     # Métodos de pago: zelle / transfer / other.
     payment_methods = models.JSONField(default=list, blank=True)
     winner = models.ForeignKey("participants.Participant", on_delete=models.SET_NULL,
@@ -47,26 +49,41 @@ class Raffle(models.Model):
 
     # === Campos calculados desde las reservas (fuente única de verdad) ===
 
+    def _numbers_for_status(self, status):
+        numbers = set()
+        for reservation in self.reservations.filter(status=status):
+            numbers.update(reservation.numbers or [])
+        return sorted(numbers)
+
+    @property
+    def completed_numbers(self):
+        """Números con pago confirmado (vendidos)."""
+        return self._numbers_for_status(PaymentStatus.COMPLETED)
+
     @property
     def reserved_numbers(self):
-        """Números tomados por cualquier reserva de esta rifa."""
+        """Números reservados (pendientes y no vencidos).
+
+        Las reservas pendientes vencidas liberan sus números.
+        """
         numbers = set()
-        for reservation in self.reservations.all():
-            numbers.update(reservation.numbers)
+        for reservation in self.reservations.filter(status=PaymentStatus.PENDING):
+            if not reservation.is_expired():
+                numbers.update(reservation.numbers or [])
         return sorted(numbers)
+
+    @property
+    def taken_numbers(self):
+        """Números no disponibles (vendidos o reservados vigentes)."""
+        return sorted(set(self.completed_numbers) | set(self.reserved_numbers))
 
     @property
     def sold_count(self):
         """Cantidad de números vendidos (reservas confirmadas)."""
-        return sum(
-            len(reservation.numbers)
-            for reservation in self.reservations.filter(
-                status=PaymentStatus.COMPLETED
-            )
-        )
+        return len(self.completed_numbers)
 
     @property
     def free_numbers(self):
         """Números que aún no han sido reservados."""
-        reserved = set(self.reserved_numbers)
-        return [n for n in range(1, self.total_tickets + 1) if n not in reserved]
+        taken = set(self.taken_numbers)
+        return [n for n in range(1, self.total_tickets + 1) if n not in taken]

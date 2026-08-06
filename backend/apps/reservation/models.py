@@ -27,6 +27,7 @@ class Reservation(models.Model):
         default=PaymentStatus.PENDING,
         db_index=True,
     )
+    expires_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -37,3 +38,20 @@ class Reservation(models.Model):
 
     def __str__(self) -> str:
         return f"{self.participants_fk} - {len(self.numbers)} números"
+
+    def is_expired(self) -> bool:
+        """True si la reserva sigue pendiente y ya pasó su fecha de vencimiento."""
+        from django.utils import timezone
+
+        return (
+            self.status == PaymentStatus.PENDING
+            and self.expires_at is not None
+            and timezone.now() > self.expires_at
+        )
+
+    @property
+    def effective_status(self) -> str:
+        """Estado real: devuelve Vencido si la reserva pendiente expiró."""
+        if self.is_expired():
+            return PaymentStatus.EXPIRED
+        return self.status

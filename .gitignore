@@ -15,6 +15,7 @@ dist/
 *.sqlite3
 backend/staticfiles/
 backend/.pytest_cache/
+backend/media/
 
 # Migraciones locales (el backend aún no se despliega en Vercel)
 backend/apps/*/migrations/[0-9]*.py

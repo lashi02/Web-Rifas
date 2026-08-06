@@ -40,6 +40,7 @@ LOCAL_APPS = [
     "apps.raffles",
     "apps.participants",
     "apps.reservation",
+    "apps.uploads",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -114,6 +115,25 @@ USE_TZ = True
 # === Estáticos (Vercel ejecuta `collectstatic` automáticamente) ===
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# === Archivos subidos (imágenes de rifas) ===
+# En desarrollo (sin Cloudinary) se guardan en MEDIA_ROOT y Django las sirve.
+# En producción se prefiere Cloudinary: el filesystem de Vercel es de solo lectura.
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+# === Cloudinary ===
+CLOUDINARY_CLOUD_NAME = env("CLOUDINARY_CLOUD_NAME", default="")
+CLOUDINARY_API_KEY = env("CLOUDINARY_API_KEY", default="")
+CLOUDINARY_API_SECRET = env("CLOUDINARY_API_SECRET", default="")
+if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
+    import cloudinary
+
+    cloudinary.config(
+        cloud_name=CLOUDINARY_CLOUD_NAME,
+        api_key=CLOUDINARY_API_KEY,
+        api_secret=CLOUDINARY_API_SECRET,
+    )
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

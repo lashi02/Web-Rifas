@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from django.db import transaction
+from django.utils import timezone
 from rest_framework import serializers
 
 from apps.participants.models import Participant
@@ -31,6 +34,7 @@ class ReservationSerializer(serializers.ModelSerializer):
         allow_null=True,
         write_only=True,
     )
+    status = serializers.SerializerMethodField()
 
     class Meta:
         model = Reservation
@@ -47,6 +51,7 @@ class ReservationSerializer(serializers.ModelSerializer):
             "participants_fk",
             "numbers",
             "status",
+            "expires_at",
             "created_at",
             "updated_at",
         ]
@@ -55,10 +60,14 @@ class ReservationSerializer(serializers.ModelSerializer):
             "raffle_fk",
             "participants_fk",
             "numbers",
-            "status",
+            "expires_at",
             "created_at",
             "updated_at",
         ]
+
+    def get_status(self, obj):
+        """Estado efectivo: Vencido si la reserva pendiente expiró."""
+        return obj.effective_status
 
     def validate(self, attrs):
         raffle = attrs.get("raffle_fk")
@@ -123,6 +132,11 @@ class ReservationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         participant = self._get_or_create_participant(validated_data)
         validated_data["participants_fk"] = participant
+        raffle = validated_data.get("raffle_fk")
+        if raffle is not None:
+            validated_data["expires_at"] = timezone.now() + timedelta(
+                minutes=raffle.reservation_limit_minutes
+            )
         return super().create(validated_data)
 
 

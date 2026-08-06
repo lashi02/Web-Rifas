@@ -3,7 +3,7 @@
 from django.utils import timezone
 from rest_framework import serializers
 
-from apps.enums.status import PaymentStatus
+from apps.enums.status import PaymentStatus, Status
 from apps.participants.models import Participant
 from apps.raffles.models import Raffle
 from apps.raffles.services import verify_featured
@@ -51,11 +51,20 @@ class RaffleSerializer(serializers.ModelSerializer):
         ]
 
     def validate_winner(self, winner):
-        """Valida que el ganador tenga una reserva confirmada en esta rifa."""
+        """Valida la asignación de ganador sobre una rifa activa."""
         if winner is None or self.instance is None:
             return winner
 
         raffle = self.instance
+        if raffle.status == Status.FINISHED:
+            raise serializers.ValidationError(
+                "No se puede modificar el ganador de una rifa finalizada."
+            )
+        if raffle.winner_id and raffle.winner_id != winner.pk:
+            raise serializers.ValidationError(
+                "Esta rifa ya tiene un ganador asignado."
+            )
+
         completed = Reservation.objects.filter(
             raffle_fk=raffle,
             participants_fk=winner,
@@ -102,6 +111,11 @@ class RaffleSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
+        # Una rifa finalizada no se puede editar (ni cambiarle el ganador).
+        if instance.status == Status.FINISHED:
+            raise serializers.ValidationError(
+                "No se puede editar una rifa finalizada."
+            )
         # Asignación de ganador: solo se actualiza ese campo, el resto se deja igual.
         winner = validated_data.pop("winner", None)
         if winner is not None:
