@@ -12,9 +12,12 @@ dist/
 .astro/
 
 # Django (backend)
-backend/database.sqlite3
+*.sqlite3
 backend/staticfiles/
 backend/.pytest_cache/
+
+# Migraciones locales (el backend aún no se despliega en Vercel)
+backend/apps/*/migrations/[0-9]*.py
 
 # Agente de planificación
 .mimocode/
