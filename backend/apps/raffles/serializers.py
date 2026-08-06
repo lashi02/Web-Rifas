@@ -3,8 +3,11 @@
 from django.utils import timezone
 from rest_framework import serializers
 
+from apps.enums.status import PaymentStatus
+from apps.participants.models import Participant
 from apps.raffles.models import Raffle
 from apps.raffles.services import verify_featured
+from apps.reservation.models import Reservation
 
 ALLOWED_PAYMENT_METHODS = {"zelle", "transfer", "other"}
 
@@ -18,6 +21,11 @@ class RaffleSerializer(serializers.ModelSerializer):
     )
     free_tickets = serializers.ListField(
         child=serializers.IntegerField(), read_only=True, source="free_numbers"
+    )
+    winner = serializers.PrimaryKeyRelatedField(
+        queryset=Participant.objects.all(),
+        required=False,
+        allow_null=True,
     )
 
     class Meta:
@@ -39,7 +47,31 @@ class RaffleSerializer(serializers.ModelSerializer):
             "updated_at",
             "featured",
             "payment_methods",
+            "winner",
         ]
+
+    def validate_winner(self, winner):
+        """Valida que el ganador tenga una reserva confirmada en esta rifa."""
+        if winner is None or self.instance is None:
+            return winner
+
+        raffle = self.instance
+        completed = Reservation.objects.filter(
+            raffle_fk=raffle,
+            participants_fk=winner,
+            status=PaymentStatus.COMPLETED,
+        )
+        has_valid_reservation = any(
+            bool((res.numbers or []))
+            and all(1 <= n <= raffle.total_tickets for n in res.numbers)
+            for res in completed
+        )
+        if not has_valid_reservation:
+            raise serializers.ValidationError(
+                "El participante debe tener una reserva confirmada "
+                "con números válidos en esta rifa."
+            )
+        return winner
 
     def validate_payment_methods(self, value):
         """Valida la integridad de los métodos de pago."""
@@ -68,6 +100,13 @@ class RaffleSerializer(serializers.ModelSerializer):
         if validated_data.get("featured") and not verify_featured():
             raise serializers.ValidationError("Ya existe una rifa destacada.")
         return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        # Asignación de ganador: solo se actualiza ese campo, el resto se deja igual.
+        winner = validated_data.pop("winner", None)
+        if winner is not None:
+            instance.winner = winner
+        return super().update(instance, validated_data)
 
     def to_representation(self, instance):
         """Convierte el objeto a un diccionario para la respuesta JSON."""

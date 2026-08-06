@@ -16,3 +16,8 @@ class RaffleAdminViewSet(viewsets.ModelViewSet):
     queryset = Raffle.objects.all()
     serializer_class = RaffleSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        # Permite PUT parcial para asignar el ganador.
+        kwargs["partial"] = True
+        return super().update(request, *args, **kwargs)
