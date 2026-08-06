@@ -27,6 +27,16 @@ class Raffle(models.Model):
     featured = models.BooleanField(default=False)
     # Métodos de pago: zelle / transfer / other.
     payment_methods = models.JSONField(default=list, blank=True)
+    winner = models.ForeignKey("participants.Participant", on_delete=models.SET_NULL,
+                                                            null=True,
+                                                            blank=True,
+    )
+
+    def save(self, *args, **kwargs):
+        if self.winner_id:
+            self.status = Status.FINISHED
+        super().save(*args, **kwargs)
+
     class Meta:
         ordering = ["-created_at"]
         verbose_name = "Rifa"
